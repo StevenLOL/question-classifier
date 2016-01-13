@@ -71,7 +71,7 @@
 							</form>
 						</div>
 						<div class="login-footer">
-							<span class="text-right"><a href="<c:url value="userdashboard"/>" class="color-white">Forgot
+							<span class="text-right"><a href="<c:url value="dashboard"/>" class="color-white">Forgot
 									password?</a></span>
 						</div>
 					</div>
