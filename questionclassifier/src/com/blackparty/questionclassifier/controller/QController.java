@@ -14,7 +14,7 @@ import com.blackparty.questionclassifier.core.Tagger;
 @Controller
 public class QController {
 	
-	@RequestMapping(value="/")
+	@RequestMapping(value="/churva")
     public ModelAndView index(
             @RequestParam(defaultValue = "What is the probability that it lands on heads exactly one time?",value = "sentence") String input
     ){
