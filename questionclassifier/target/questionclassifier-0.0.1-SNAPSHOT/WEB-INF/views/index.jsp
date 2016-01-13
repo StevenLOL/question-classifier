@@ -8,16 +8,10 @@
 </head>
 <body>
 	<h5>${message}</h5>
-	<p>Input = ${input}</p>
-	<p>Returned value = ${returned_input}</p>
-	
-	<form action="relational_dependency" method="post">
-		<textarea rows="5" cols="50" name = "message"></textarea><br>
-		<input type="submit" value="Display Relational Dependency">
-	</form>
-	<form action="pos_tag" method="post">
-		<textarea rows="5" cols="50" name = "message"></textarea><br>
-		<input type="submit" value="Display POS Tags">
+	<form action="login" method="post">
+		<input type = "text" name = "username" placeholder="username"/><br>
+		<input type ="password" name = "password" placeholder = "password"/>
+		<input type="submit" value="Login">
 	</form>
 </body>
 </html>

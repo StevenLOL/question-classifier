@@ -1,4 +1,9 @@
-com\blackparty\questionclassifier\controller\UserController.class
+com\blackparty\models\User.class
+com\blackparty\models\QuestionItem.class
 com\blackparty\questionclassifier\core\RelationshipExtractor.class
-com\blackparty\questionclassifier\controller\QController.class
+com\blackparty\models\Sentence.class
 com\blackparty\questionclassifier\core\Tagger.class
+com\blackparty\models\Word.class
+com\blackparty\questionclassifier\controller\UserController.class
+com\blackparty\questionclassifier\core\Uploader.class
+com\blackparty\questionclassifier\controller\QController.class
