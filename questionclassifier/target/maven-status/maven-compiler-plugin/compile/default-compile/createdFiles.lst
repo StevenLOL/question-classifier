@@ -1,3 +1,4 @@
+com\blackparty\questionclassifier\controller\UserController.class
 com\blackparty\questionclassifier\core\RelationshipExtractor.class
 com\blackparty\questionclassifier\controller\QController.class
 com\blackparty\questionclassifier\core\Tagger.class
