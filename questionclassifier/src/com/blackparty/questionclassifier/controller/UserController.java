@@ -8,9 +8,14 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/blackparty")
 public class UserController {
-	
+
 	@RequestMapping("/home")
 	public String loginPage() {
 		return "login";
+	}
+
+	@RequestMapping(value="/dashboard")
+	public String dashboard() {
+		return "dashboard";
 	}
 }
