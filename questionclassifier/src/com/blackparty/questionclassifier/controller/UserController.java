@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.blackparty.models.User;
+import com.blackparty.questionclassifier.models.User;
 
 
 @Controller
