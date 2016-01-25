@@ -10,7 +10,7 @@ import java.nio.file.Path;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.blackparty.models.User;
+import com.blackparty.questionclassifier.models.User;
 
 public class Uploader {
 	private String dataDirectory = System.getProperty("catalina.base")+"/User";

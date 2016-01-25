@@ -1,0 +1,16 @@
+package com.blackparty.questionclassifier.core;
+import com.blackparty.models.QuestionItem;
+
+public class Splitter {
+	private QuestionItem questionItem;
+	private String regex = " ?(?<!\\G)((?<=[^\\p{Punct}])(?=\\p{Punct})|\\b) ?";
+	
+	public Splitter(){}
+	
+	public QuestionItem split(String input){
+		String[] temp = input.split(regex);
+		
+		
+		return questionItem; 
+	}
+}
