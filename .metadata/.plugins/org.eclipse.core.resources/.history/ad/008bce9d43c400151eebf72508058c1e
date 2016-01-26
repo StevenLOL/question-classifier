@@ -27,7 +27,6 @@ public class UserController {
 			@RequestParam(value="password")String password
 			) {
 		String destination ="login";
-		User user = new User(username, password);
 		List<User> userList = um.getUser(username);
 		if(userList.get(0).getPassword().contentEquals(password)){
 			destination = "home";

@@ -27,14 +27,13 @@ public class UserController {
 			@RequestParam(value="password")String password
 			) {
 		String destination ="login";
-		User user = new User(username, password);
 		List<User> userList = um.getUser(username);
 		if(userList.get(0).getPassword().contentEquals(password)){
 			destination = "home";
 		}else{
-			destination = "login";
+			destination = "login"
 		}
-		ModelAndView mav = new ModelAndView(destination, "message", "Running QController.login() method.");
+		ModelAndView mav = new ModelAndView("home", "message", "Running QController.login() method.");
 		mav.addObject("user_object", user);
 		return mav;
 	}

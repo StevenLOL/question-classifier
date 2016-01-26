@@ -1,8 +1,6 @@
 package com.blackparty.questionclassifier.controller;
 
 
-import java.util.List;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,15 +24,8 @@ public class UserController {
 			@RequestParam(value="username")String username,
 			@RequestParam(value="password")String password
 			) {
-		String destination ="login";
-		User user = new User(username, password);
-		List<User> userList = um.getUser(username);
-		if(userList.get(0).getPassword().contentEquals(password)){
-			destination = "home";
-		}else{
-			destination = "login";
-		}
-		ModelAndView mav = new ModelAndView(destination, "message", "Running QController.login() method.");
+		User user = new User(username,password);
+		ModelAndView mav = new ModelAndView("home", "message", "Running QController.login() method.");
 		mav.addObject("user_object", user);
 		return mav;
 	}
