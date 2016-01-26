@@ -1,7 +1,16 @@
 package com.blackparty.questionclassifier.models;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="USER_TABLE")
 public class User {
+	
+	@Column(name="USERNAME")
 	private String username;
+	@Column(name="PASSWORD")
 	private String password;
 	
 	
