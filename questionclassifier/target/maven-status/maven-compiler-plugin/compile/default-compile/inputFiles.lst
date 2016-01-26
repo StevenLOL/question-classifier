@@ -1,3 +1,12 @@
-D:\Our Files\Eric\J2EE Mars\questionclassifier\src\com\blackparty\questionclassifier\core\Tagger.java
-D:\Our Files\Eric\J2EE Mars\questionclassifier\src\com\blackparty\questionclassifier\core\RelationshipExtractor.java
-D:\Our Files\Eric\J2EE Mars\questionclassifier\src\com\blackparty\questionclassifier\controller\QController.java
+D:\Our Files\Eric\J2EE Mars\question-classifier\question-classifier\questionclassifier\src\com\blackparty\questionclassifier\core\Uploader.java
+D:\Our Files\Eric\J2EE Mars\question-classifier\question-classifier\questionclassifier\src\com\blackparty\questionclassifier\core\Tagger.java
+D:\Our Files\Eric\J2EE Mars\question-classifier\question-classifier\questionclassifier\src\com\blackparty\questionclassifier\models\QuestionItem.java
+D:\Our Files\Eric\J2EE Mars\question-classifier\question-classifier\questionclassifier\src\com\blackparty\questionclassifier\models\User.java
+D:\Our Files\Eric\J2EE Mars\question-classifier\question-classifier\questionclassifier\src\com\blackparty\questionclassifier\models\Word.java
+D:\Our Files\Eric\J2EE Mars\question-classifier\question-classifier\questionclassifier\src\com\blackparty\questionclassifier\controller\UserController.java
+D:\Our Files\Eric\J2EE Mars\question-classifier\question-classifier\questionclassifier\src\com\blackparty\questionclassifier\controller\QController.java
+D:\Our Files\Eric\J2EE Mars\question-classifier\question-classifier\questionclassifier\src\com\blackparty\questionclassifier\controller\NavigationController.java
+D:\Our Files\Eric\J2EE Mars\question-classifier\question-classifier\questionclassifier\src\com\blackparty\questionclassifier\models\Sentence.java
+D:\Our Files\Eric\J2EE Mars\question-classifier\question-classifier\questionclassifier\src\com\blackparty\questionclassifier\core\RelationshipExtractor.java
+D:\Our Files\Eric\J2EE Mars\question-classifier\question-classifier\questionclassifier\src\com\blackparty\questionclassifier\core\TaggerImpl.java
+D:\Our Files\Eric\J2EE Mars\question-classifier\question-classifier\questionclassifier\src\com\blackparty\questionclassifier\core\Splitter.java
