@@ -8,6 +8,7 @@ import com.blackparty.questionclassifier.models.QuestionItem;
 import com.sun.org.apache.bcel.internal.generic.StackProducer;
 
 public class Splitter {
+	
 	private QuestionItem questionItem;
 	private String regex = " ?(?<!\\G)((?<=[^\\p{Punct}])(?=\\p{Punct})|\\b) ?";
 

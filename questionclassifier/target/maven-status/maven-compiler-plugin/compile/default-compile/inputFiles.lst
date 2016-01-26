@@ -1,9 +1,13 @@
-D:\Our Files\Eric\J2EE Mars\question-classifier\question-classifier\questionclassifier\src\com\blackparty\models\QuestionItem.java
-D:\Our Files\Eric\J2EE Mars\question-classifier\question-classifier\questionclassifier\src\com\blackparty\questionclassifier\core\Uploader.java
-D:\Our Files\Eric\J2EE Mars\question-classifier\question-classifier\questionclassifier\src\com\blackparty\questionclassifier\core\Tagger.java
-D:\Our Files\Eric\J2EE Mars\question-classifier\question-classifier\questionclassifier\src\com\blackparty\models\User.java
-D:\Our Files\Eric\J2EE Mars\question-classifier\question-classifier\questionclassifier\src\com\blackparty\questionclassifier\controller\UserController.java
-D:\Our Files\Eric\J2EE Mars\question-classifier\question-classifier\questionclassifier\src\com\blackparty\models\Word.java
-D:\Our Files\Eric\J2EE Mars\question-classifier\question-classifier\questionclassifier\src\com\blackparty\questionclassifier\controller\QController.java
-D:\Our Files\Eric\J2EE Mars\question-classifier\question-classifier\questionclassifier\src\com\blackparty\questionclassifier\core\RelationshipExtractor.java
-D:\Our Files\Eric\J2EE Mars\question-classifier\question-classifier\questionclassifier\src\com\blackparty\models\Sentence.java
+D:\Yeyah\School\Thesis\question-classifier\questionclassifier\src\com\blackparty\questionclassifier\core\Tagger.java
+D:\Yeyah\School\Thesis\question-classifier\questionclassifier\src\com\blackparty\questionclassifier\models\QuestionItem.java
+D:\Yeyah\School\Thesis\question-classifier\questionclassifier\src\com\blackparty\questionclassifier\models\Page.java
+D:\Yeyah\School\Thesis\question-classifier\questionclassifier\src\com\blackparty\questionclassifier\controller\QController.java
+D:\Yeyah\School\Thesis\question-classifier\questionclassifier\src\com\blackparty\questionclassifier\models\User.java
+D:\Yeyah\School\Thesis\question-classifier\questionclassifier\src\com\blackparty\questionclassifier\core\Splitter.java
+D:\Yeyah\School\Thesis\question-classifier\questionclassifier\src\com\blackparty\questionclassifier\core\RelationshipExtractor.java
+D:\Yeyah\School\Thesis\question-classifier\questionclassifier\src\com\blackparty\questionclassifier\models\Item.java
+D:\Yeyah\School\Thesis\question-classifier\questionclassifier\src\com\blackparty\questionclassifier\controller\NavigationController.java
+D:\Yeyah\School\Thesis\question-classifier\questionclassifier\src\com\blackparty\questionclassifier\models\Word.java
+D:\Yeyah\School\Thesis\question-classifier\questionclassifier\src\com\blackparty\questionclassifier\core\Uploader.java
+D:\Yeyah\School\Thesis\question-classifier\questionclassifier\src\com\blackparty\questionclassifier\models\Sentence.java
+D:\Yeyah\School\Thesis\question-classifier\questionclassifier\src\com\blackparty\questionclassifier\controller\UserController.java

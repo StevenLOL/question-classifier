@@ -9,7 +9,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-import edu.stanford.nlp.trees.TypedDependency;
+
+
+
+
+
+
+
+
 
 import com.blackparty.questionclassifier.core.RelationshipExtractor;
 import com.blackparty.questionclassifier.core.Splitter;
@@ -17,6 +24,9 @@ import com.blackparty.questionclassifier.core.Tagger;
 import com.blackparty.questionclassifier.core.Uploader;
 import com.blackparty.questionclassifier.models.QuestionItem;
 import com.blackparty.questionclassifier.models.User;
+
+import edu.stanford.nlp.trees.TypedDependency;
+
 
 @Controller
 @SessionAttributes("user_object")
@@ -31,6 +41,7 @@ public class QController {
 			try {
 				Uploader u = new Uploader();
 				System.out.println("Uploading File..");
+				
 				u.upload(file,user,"Knowledge");
 			} catch (Exception e) {
 				systemMessage = "Upload failed";
