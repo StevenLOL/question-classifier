@@ -3,8 +3,9 @@ package com.blackparty.questionclassifier.models;
 public class Word {
 	private String wordName;
 	private String posTag;
-	
-	public Word(){}
+
+	public Word() {
+	}
 
 	public Word(String word, String pos) {
 		super();
@@ -23,7 +24,17 @@ public class Word {
 	public String getPos() {
 		return posTag;
 	}
+
 	public void setPos(String pos) {
 		this.posTag = pos;
+	}
+
+	@Override
+	public String toString() {
+		return wordName;
+	}
+
+	public String toStringWithTag() {
+		return "[ "+this.wordName+" | "+this.posTag+" ]";
 	}
 }
