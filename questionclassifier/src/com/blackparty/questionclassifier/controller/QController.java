@@ -28,6 +28,7 @@ public class QController {
 	public ModelAndView showFeedPage(@RequestParam("file") MultipartFile file,
 			@ModelAttribute("user_object") User user) {
 		
+		
 		if (!file.isEmpty()) {
 			try {
 				Uploader u = new Uploader();
