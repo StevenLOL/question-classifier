@@ -7,14 +7,19 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.pdfbox.exceptions.COSVisitorException;
+import org.apache.pdfbox.exceptions.CryptographyException;
+import org.apache.pdfbox.exceptions.InvalidPasswordException;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
-import org.apache.pdfbox.text.PDFTextStripper;
-import org.apache.pdfbox.text.TextPosition;
+import org.apache.pdfbox.util.PDFTextStripper;
+import org.apache.pdfbox.util.TextPosition;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.blackparty.questionclassifier.models.Item;
@@ -79,8 +84,7 @@ public class Uploader {
 			System.out.print("it's empty");
 		} else {
 			ArrayList<Item> byitem = parseQandC(byPage);
-			setRectangle(byitem,
-					userDirectory + "/" + file.getOriginalFilename());
+			setRectangle(byitem,userDirectory + "/" + file.getOriginalFilename(),convertedFile);
 		}
 		return flag;
 	}
@@ -90,8 +94,18 @@ public class Uploader {
 		PDDocument document = null;
 
 		document = PDDocument.load(file);
+		if (document.isEncrypted()) {
+            try {
+                document.decrypt("");
+            } catch (InvalidPasswordException e) {
+                System.err.println("Error: Document is encrypted with a password.");
+                System.exit(1);
+            } catch (CryptographyException ex) {
+                Logger.getLogger(Uploader.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
 		String text;
-
+		
 		ArrayList<Page> byPage = new ArrayList<Page>();
 
 		PDFTextStripper stripper = new PDFTextStripper() {
@@ -122,18 +136,16 @@ public class Uploader {
 
 			boolean startOfLine = true;
 		};
+		List<PDPage> allPages =  document.getDocumentCatalog().getAllPages();
+		for (int pagenum = 0; pagenum < allPages.size()+1; pagenum++) {
+            stripper.setStartPage(pagenum);
+            stripper.setEndPage(pagenum);
+            text = stripper.getText(document);
+            //  System.out.println("page = " + pagenum + "\ncontent = " + text);
 
-		for (PDPage page : document.getDocumentCatalog().getPages()) {
-			PDDocument newdoc = new PDDocument();
-			newdoc.addPage(page);
-			newdoc.close();
-			text = stripper.getText(newdoc);
-
-			// System.out.println("page >>"+pagenum+"\n"+text);
-
-			Page newpage = new Page(text, page);
-			byPage.add(newpage);
-		}
+            Page page = new Page(text,pagenum);
+            byPage.add(page);
+        }
 
 		document.close();
 		return byPage;
@@ -180,14 +192,13 @@ public class Uploader {
 		return false;
 	}
 
-	public ArrayList<Item> parseQandC(ArrayList<Page> bypage) {
+	public ArrayList<Item> parseQandC(ArrayList<Page> bypage) throws IOException {
 		System.out.println("parseQandC");
 		double[] coordinates = new double[2];
 		ArrayList<Item> byitem = new ArrayList<Item>();
 		int index = 0;
 		Pattern q_regex = Pattern.compile(question_regex);
 		Matcher q_matcher;
-
 		for (Page perPage : bypage) {
 			Scanner scanner = new Scanner(perPage.getText());
 			while (scanner.hasNextLine()) {
@@ -195,10 +206,10 @@ public class Uploader {
 				q_matcher = q_regex.matcher(line);
 				while (q_matcher.find()) {
 					String token = q_matcher.group(0);
-					// System.out.println("token > " + token);
+					System.out.println("page ==  token > "+perPage.getPagenum()+" ==  " + token);
 					Item item = new Item();
 					item.setItemNumber("Q" + (index + 1));
-					item.setPage(perPage.getPage());
+					item.setPageNum(perPage.getPagenum());
 					coordinates = getFloat(line);
 					item.setxCoordinate(coordinates[0]);
 					item.setyCoordinate(coordinates[1]);
@@ -246,25 +257,29 @@ public class Uploader {
 		return digit;
 	}
 
-	public void setRectangle(ArrayList<Item> byitem, String userDirectory) throws IOException{
-		for(int index =0 ; index < byitem.size() ; index++){
-			PDRectangle rectangle = new PDRectangle();
-			
-			PDPage page = byitem.get(index).getPage();
+	public void setRectangle(ArrayList<Item> byitem, String userDirectory, File file) throws IOException, COSVisitorException{
 
+		PDDocument document = null;
+
+		document = PDDocument.load(file);
+		for(int index =0 ; index < byitem.size(); index++){
+			PDRectangle rectangle = new PDRectangle();
+
+			PDPage page = (PDPage) document.getDocumentCatalog().getAllPages().get(byitem.get(index).getPagenum()-1);
 			System.out.println("MAO NI PAGE GI PROCESS " + page);
 			System.out.println("THIS IS the text" + byitem.get(index).getText());
+			System.out.println("THIS IS PAGE" + byitem.get(index).getPagenum()+"\n\n\n");
 			
-			if ((index + 1) < byitem.size() && page == byitem.get(index + 1).getPage()) {
-				rectangle.setUpperRightY(842 - ((float) byitem.get(index).getyCoordinate() - 30));
-				rectangle.setLowerLeftY(842 - ((float) byitem.get(index + 1).getyCoordinate() - 20)); // 0.0
+			if ((index + 1) < byitem.size()+1 && byitem.get(index).getPagenum() == byitem.get(index+1).getPagenum()) {
+				rectangle.setUpperRightY(842 - ((float) byitem.get(index + 1).getyCoordinate() - 20));
+				rectangle.setLowerLeftY(842 - ((float) byitem.get(index).getyCoordinate() - 30)); // 0.0
 			}else {
 				rectangle.setUpperRightY(842 - ((float) byitem.get(index).getyCoordinate() - 30)); // 842
 													// (float)byitem.get(i+1).getyCoordinate()+20
 				rectangle.setLowerLeftY(842 - 782); // 0.0
 			}
-			rectangle.setUpperRightX(page.getCropBox().getUpperRightX());
-			rectangle.setLowerLeftX(page.getCropBox().getLowerLeftX());
+			rectangle.setUpperRightX(page.findCropBox().getUpperRightX());
+			rectangle.setLowerLeftX(page.findCropBox().getLowerLeftX());
 			page.setCropBox(rectangle);
 			
 			PDDocument croppedDoc = null;
@@ -273,5 +288,6 @@ public class Uploader {
 			croppedDoc.save(userDirectory + byitem.get(index).getItemNumber()+ ".pdf");
 			croppedDoc.close();
 		}
+		document.close();
 	}
 }

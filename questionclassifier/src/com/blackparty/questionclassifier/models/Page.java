@@ -4,14 +4,14 @@ import org.apache.pdfbox.pdmodel.PDPage;
 
 public class Page {
 	  private String text;
-	    private PDPage page;
+	  private int pagenum;
 
 	    public Page() {
 	    }
 
-	    public Page(String text, PDPage page) {
+	    public Page(String text,int pagenum) {
 	        this.text = text;
-	        this.page = page;
+	        this.pagenum = pagenum;
 	    }
 
 	    public String getText() {
@@ -22,11 +22,15 @@ public class Page {
 	        this.text = text;
 	    }
 
-	    public PDPage getPage() {
-	        return page;
-	    }
+		public int getPagenum() {
+			return pagenum;
+		}
 
-	    public void setPage(PDPage page) {
-	        this.page = page;
-	    }
+		public void setPagenum(int pagenum) {
+			this.pagenum = pagenum;
+		}
+
+	  
+
+	    
 }
