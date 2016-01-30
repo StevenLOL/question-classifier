@@ -1,0 +1,11 @@
+package com.blackparty.questionclassifier.core;
+
+import java.util.List;
+
+import com.blackparty.questionclassifier.models.User;
+
+public interface UserManager {
+	public void addUser(User user);
+	public List<User> getUser(String username);
+	public void deleteUser(String username);
+}

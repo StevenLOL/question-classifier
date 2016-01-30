@@ -14,6 +14,7 @@ import edu.stanford.nlp.trees.TypedDependency;
 import com.blackparty.questionclassifier.core.RelationshipExtractor;
 import com.blackparty.questionclassifier.core.Splitter;
 import com.blackparty.questionclassifier.core.Tagger;
+import com.blackparty.questionclassifier.core.TaggerImpl;
 import com.blackparty.questionclassifier.core.Uploader;
 import com.blackparty.questionclassifier.models.QuestionItem;
 import com.blackparty.questionclassifier.models.User;
@@ -26,6 +27,7 @@ public class QController {
 	@RequestMapping(value = "/feed")
 	public ModelAndView showFeedPage(@RequestParam("file") MultipartFile file,
 			@ModelAttribute("user_object") User user) {
+		
 		
 		if (!file.isEmpty()) {
 			try {
@@ -57,7 +59,7 @@ public class QController {
 	@RequestMapping(value = "/pos_tag")
 	public ModelAndView getPosTag(@RequestParam(value = "message") String input) {
 		ModelAndView mav = new ModelAndView("feed", "message", "Running QController.getPostTag()");
-		Tagger tagger = new Tagger();
+		Tagger tagger = new TaggerImpl();
 		String tagged = tagger.tag(input);
 		mav.addObject("returned_input", tagged);
 		mav.addObject("input", input);
@@ -69,9 +71,12 @@ public class QController {
 			){
 		ModelAndView mav = new ModelAndView("feed","message","Running QController.process() method.");
 		
-		Splitter splitter = new Splitter();
-		QuestionItem qi = splitter.split(input);
-		
+		Splitter split= new Splitter();
+		QuestionItem qi = split.distribute(input);
+		TaggerImpl tagger = new TaggerImpl();
+		qi.displayWordValues();
+		qi = tagger.tag(qi);
+		qi.displayWordWithTags();
 		return mav;
 	}
 
