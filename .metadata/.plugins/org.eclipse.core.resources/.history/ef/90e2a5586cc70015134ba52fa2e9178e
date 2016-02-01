@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<server auto-publish-setting="1" auto-publish-time="1" configuration-id="/Servers/tomcatQclassifier-config" deployDir="wtpwebapps" hostname="localhost" id="tomcatQclassifier" name="tomcatQclassifier" runtime-id="Apache Tomcat v7.0" server-type="org.eclipse.jst.server.tomcat.70" server-type-id="org.eclipse.jst.server.tomcat.70" start-timeout="120" stop-timeout="40" testEnvironment="false" timestamp="17">
+  <list key="modules" value0="questionclassifier::org.eclipse.jst.jee.server:questionclassifier::jst.web::3.0"/>
+</server>

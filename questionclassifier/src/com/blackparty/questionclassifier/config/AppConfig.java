@@ -20,9 +20,8 @@ import com.blackparty.questionclassifier.service.UserService;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "com.blackparty.questionclassifier")
+@ComponentScan(basePackages = "com.blackparty.questionclassifier.*")
 public class AppConfig extends WebMvcConfigurerAdapter{
-	
 	@Bean
     public ViewResolver viewResolver() {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
@@ -43,4 +42,5 @@ public class AppConfig extends WebMvcConfigurerAdapter{
         messageSource.setBasename("messages");
         return messageSource;
     }
+    
 }

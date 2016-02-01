@@ -22,5 +22,9 @@
 		<textarea rows="5" cols="50" name = "message"></textarea><br>
 		<input type="submit" value="Process">
 	</form>
+	<form action="hypernym" method="post">
+		<textarea rows="5" cols="50" name = "message"></textarea><br>
+		<input type="submit" value="Display Hypernyms">
+	</form>
 </body>
 </html>
