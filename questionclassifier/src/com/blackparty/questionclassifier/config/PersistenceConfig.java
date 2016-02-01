@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @ComponentScan({ "com.blackparty.questionclassifier.config" })
 @EnableTransactionManagement
-public class PersistenceConfig {
+public class PersistenceConfig { 	
 	@Autowired
     private Environment env;
 	
@@ -31,7 +31,6 @@ public class PersistenceConfig {
         sessionFactory.setDataSource(restDataSource());
         sessionFactory.setPackagesToScan(new String[] { "com.blackparty.questionclassifier.models" });
         sessionFactory.setHibernateProperties(hibernateProperties());
-
         return sessionFactory;
     }
 
@@ -45,8 +44,7 @@ public class PersistenceConfig {
 
         return dataSource;
     }
-
-  
+    
     @Bean
     @Autowired
     public HibernateTransactionManager transactionManager(SessionFactory sessionFactory) {
@@ -68,4 +66,5 @@ public class PersistenceConfig {
         hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "update");
         return hibernateProperties;
     }
+
 }
