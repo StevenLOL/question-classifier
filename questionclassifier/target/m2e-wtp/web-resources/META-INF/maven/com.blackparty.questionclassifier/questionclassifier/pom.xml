@@ -43,7 +43,6 @@
 		</dependency>
 
 		<!-- Stanford NLP -->
-		
 		<dependency>
 			<groupId>edu.stanford.nlp</groupId>
 			<artifactId>stanford-parser</artifactId>
