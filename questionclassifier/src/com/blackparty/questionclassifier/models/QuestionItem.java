@@ -3,14 +3,14 @@ package com.blackparty.questionclassifier.models;
 import java.util.List;
 
 public class QuestionItem {
-	private List<Sentence> sentenceList;
+	private List<Sentence> sentences;
 	private int year;
 	private int questionNumber;
 	
 	public QuestionItem(){}
 	
-	public QuestionItem(List<Sentence> sentenceList){
-		this.sentenceList = sentenceList;
+	public QuestionItem(List<Sentence> sentences){
+		this.sentences = sentences;
 	}
 	
 	public QuestionItem(int year, int questionNumber){
@@ -18,12 +18,12 @@ public class QuestionItem {
 		this.questionNumber = questionNumber;
 	}
 
-	public List<Sentence> getSentenceList() {
-		return sentenceList;
+	public List<Sentence> getSentences() {
+		return sentences;
 	}
 
-	public void setSentenceList(List<Sentence> sentenceList) {
-		this.sentenceList = sentenceList;
+	public void setSentenceList(List<Sentence> sentences) {
+		this.sentences = sentences;
 	}
 
 	public int getYear() {
@@ -42,6 +42,23 @@ public class QuestionItem {
 		this.questionNumber = questionNumber;
 	}
 	
+	public void displayWordValues(){
+		System.out.println("display word values..");
+        for(Sentence s : getSentences()){
+            for(Word w: s.getWordList()){
+                System.out.println(w.getWord());
+            }
+        }
+    }
 	
+	public void displayWordWithTags(){
+		System.out.println("display word with tags...");
+		for(Sentence s:getSentences()){
+			for(Word w: s.getWordList()){
+				System.out.println(w.toStringWithTag());
+			}
+		}
+		
+	}
 	
 }

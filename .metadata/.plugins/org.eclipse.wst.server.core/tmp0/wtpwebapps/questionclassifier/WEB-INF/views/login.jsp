@@ -60,7 +60,7 @@
 							</div>
 							<form action="login" method="post">
 								<div class="control">
-									<input type="text" class="form-control" name="username"value="admin@gmail.com" />
+									<input type="text" class="form-control" name="username"value="admin" />
 								</div>
 								<div class="control">
 									<input type="password" class="form-control" name="password" value="123456" />
@@ -72,7 +72,8 @@
 						</div>
 						<div class="login-footer">
 							<span class="text-right"><a href="<c:url value="dashboard"/>" class="color-white">Forgot
-									password?</a></span>
+									password?</a></span>&nbsp;
+									<span class="text-right"><a href="register" class="color-white">Register</a></span>
 						</div>
 					</div>
 				</div>

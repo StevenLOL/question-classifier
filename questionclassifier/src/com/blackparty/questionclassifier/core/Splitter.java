@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.blackparty.questionclassifier.models.QuestionItem;
+import com.blackparty.questionclassifier.models.Sentence;
+import com.blackparty.questionclassifier.models.Word;
 import com.sun.org.apache.bcel.internal.generic.StackProducer;
 
 public class Splitter {
@@ -15,13 +17,41 @@ public class Splitter {
 	public Splitter() {
 	}
 
-	public QuestionItem split(String input) {
+	
+	public QuestionItem distribute(String input){
+		QuestionItem qi = new QuestionItem();
+        List<Sentence> sentenceList = new ArrayList();
+        Sentence s = new Sentence();
+
+        String[] split = splitter(input);
+        ArrayList<Word> wordList = new ArrayList<Word>();
+        for (int i = 0; i < split.length; i++) {
+            Word w = new Word();
+            w.setWord(split[i]);
+            wordList.add(w);
+            System.out.println("!> "+w.getWord());
+            if (wordList.get(wordList.size() - 1).getWord().contentEquals(".")||
+            		wordList.get(wordList.size() - 1).getWord().contentEquals("?")) {
+                System.out.println("hit!!!!!!!!!!!!");
+                if (s.getWordList().isEmpty()) {
+                	System.out.println("empty");
+                    s.setWordList(wordList);
+                } else {
+                	System.out.println("insert");
+                    sentenceList.add(s);
+                }
+            }
+        }
+        qi.setSentenceList(sentenceList);
+        return qi;
+	}
+	public String[] splitter(String input) {
 		String[] split = input.split(regex);
 
-		List<String> temp = new ArrayList<String>();
+		//List<String> temp = new ArrayList<String>();
 		// check if there are fractions/decimals in the sentence (eg."2A.4C").
 		// Should be considered as one
-		temp = mergeFraction(split);
+		/*temp = mergeFraction(split);
 		split = null;
 		split = temp.stream().toArray(String[]::new);
 		Arrays.stream(split).forEach(System.out::println);
@@ -32,8 +62,8 @@ public class Splitter {
 		split = null;
 		split = temp.stream().toArray(String[]::new);
 		Arrays.stream(split).forEach(System.out::println);
-		System.out.println("");
-		return questionItem;
+		System.out.println("");*/
+		return split;
 	}
 
 	public List<String> mergeExpression(String[] input){
