@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
 
@@ -23,6 +24,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 =======
+=======
+>>>>>>> refs/remotes/origin/master
 import edu.stanford.nlp.ling.IndexedWord;
 import edu.stanford.nlp.trees.TypedDependency;
 import net.didion.jwnl.JWNL;
@@ -33,6 +36,18 @@ import net.didion.jwnl.data.PointerUtils;
 import net.didion.jwnl.data.list.PointerTargetNodeList;
 import net.didion.jwnl.data.list.PointerTargetTree;
 import net.didion.jwnl.dictionary.Dictionary;
+<<<<<<< HEAD
+>>>>>>> refs/remotes/origin/master
+=======
+=======
+
+
+
+
+
+
+
+>>>>>>> refs/remotes/origin/dev-L
 >>>>>>> refs/remotes/origin/master
 
 import com.blackparty.questionclassifier.core.RelationshipExtractor;
