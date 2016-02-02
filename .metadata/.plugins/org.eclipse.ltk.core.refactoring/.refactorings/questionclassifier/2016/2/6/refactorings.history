@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;questionclassifier/WebContent/properties.xml&apos; to &apos;jwnl_properties.xml&apos;" description="Rename resource &apos;properties.xml&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="WebContent/properties.xml" name="jwnl_properties.xml" stamp="1454287281921" updateReferences="true"/>
+</session>

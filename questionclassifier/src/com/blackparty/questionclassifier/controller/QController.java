@@ -1,6 +1,10 @@
 package com.blackparty.questionclassifier.controller;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.Collection;
+
+import javax.servlet.ServletContext;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -9,7 +13,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
+
+import edu.stanford.nlp.ling.IndexedWord;
 import edu.stanford.nlp.trees.TypedDependency;
+import net.didion.jwnl.JWNL;
+import net.didion.jwnl.JWNLException;
+import net.didion.jwnl.data.IndexWord;
+import net.didion.jwnl.data.POS;
+import net.didion.jwnl.data.PointerUtils;
+import net.didion.jwnl.data.list.PointerTargetNodeList;
+import net.didion.jwnl.data.list.PointerTargetTree;
+import net.didion.jwnl.dictionary.Dictionary;
 
 import com.blackparty.questionclassifier.core.RelationshipExtractor;
 import com.blackparty.questionclassifier.core.Splitter;
@@ -19,6 +34,9 @@ import com.blackparty.questionclassifier.core.Uploader;
 import com.blackparty.questionclassifier.models.QuestionItem;
 import com.blackparty.questionclassifier.models.User;
 
+import edu.stanford.nlp.trees.TypedDependency;
+
+
 @Controller
 @SessionAttributes("user_object")
 public class QController {
@@ -27,11 +45,11 @@ public class QController {
 	@RequestMapping(value = "/feed")
 	public ModelAndView showFeedPage(@RequestParam("file") MultipartFile file,
 			@ModelAttribute("user_object") User user) {
-		
 		if (!file.isEmpty()) {
 			try {
 				Uploader u = new Uploader();
 				System.out.println("Uploading File..");
+				
 				u.upload(file,user,"Knowledge");
 			} catch (Exception e) {
 				systemMessage = "Upload failed";
@@ -76,6 +94,37 @@ public class QController {
 		qi.displayWordValues();
 		qi = tagger.tag(qi);
 		qi.displayWordWithTags();
+		return mav;
+	}
+	
+	@RequestMapping(value="/hypernym")
+	public ModelAndView getHypernym(
+				@RequestParam(value="message") String message
+			){
+		//setting up view
+		ModelAndView mav = new ModelAndView("feed");
+		
+		
+		IndexWord word = null;
+		// Get all of the hypernyms (parents) of the first sense of <var>word</var>
+		System.out.println("MESSAGE = "+message);
+		try{
+			//JWNL initialization
+			JWNL.initialize(new FileInputStream("D:\\Our Files\\Eric\\J2EE Mars\\question-classifier\\question-classifier\\questionclassifier\\WebContent\\jwnl_properties.xml"));
+			final Dictionary dictionary = Dictionary.getInstance();
+			
+			
+			word = dictionary.lookupIndexWord(POS.NOUN,message);
+			PointerTargetNodeList hypernyms = PointerUtils.getInstance().getDirectHypernyms(word.getSense(1));
+			System.out.println("Direct hypernyms of \"" + word.getLemma() + "\":");
+			hypernyms.print();
+		}catch(JWNLException e){
+			e.printStackTrace();
+		}catch(FileNotFoundException e){
+			e.printStackTrace();
+		}
+		mav.addObject("returned_input",word.getLemma());
+		
 		return mav;
 	}
 
