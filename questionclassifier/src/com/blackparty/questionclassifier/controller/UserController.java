@@ -3,6 +3,8 @@ package com.blackparty.questionclassifier.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -28,19 +30,39 @@ public class UserController {
 	@RequestMapping(value = "/login")
 	public ModelAndView login(
 			@RequestParam(value="username")String username,
-			@RequestParam(value="password")String password
+			@RequestParam(value="password")String password, HttpServletRequest request
 			) {
 		String destination ="login";
 		System.out.println("Running UserController.login() method.");
 		User fetchedUser = um.getUser(username);
 		if(fetchedUser.getPassword().contentEquals(password)){
-			destination = "home";
+			destination = "dashboard";
+			request.getSession().setAttribute("username", fetchedUser.getUsername());
 		}else{
 			destination = "login";
 		}
 		ModelAndView mav = new ModelAndView(destination, "message", "Running QController.login() method.");
-		mav.addObject("user_object", fetchedUser);
+		
 		return mav;
+	}
+	
+	@RequestMapping("/logout")
+	public String logout(HttpServletRequest request) {
+		request.getSession().invalidate();
+
+		return "login";
+	}
+	
+	@RequestMapping("/form")
+	public String formpage(HttpServletRequest request) {
+
+		return "form";
+	}
+	
+	@RequestMapping("/dashboard")
+	public String dashboard(HttpServletRequest request) {
+
+		return "dashboard";
 	}
 	
 	@RequestMapping(value="/add",method=RequestMethod.POST)
