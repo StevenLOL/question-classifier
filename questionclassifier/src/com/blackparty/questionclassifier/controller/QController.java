@@ -13,19 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-
-
-
-
-
-
-=======
-=======
->>>>>>> refs/remotes/origin/master
 import edu.stanford.nlp.ling.IndexedWord;
 import edu.stanford.nlp.trees.TypedDependency;
 import net.didion.jwnl.JWNL;
@@ -36,19 +23,6 @@ import net.didion.jwnl.data.PointerUtils;
 import net.didion.jwnl.data.list.PointerTargetNodeList;
 import net.didion.jwnl.data.list.PointerTargetTree;
 import net.didion.jwnl.dictionary.Dictionary;
-<<<<<<< HEAD
->>>>>>> refs/remotes/origin/master
-=======
-=======
-
-
-
-
-
-
-
->>>>>>> refs/remotes/origin/dev-L
->>>>>>> refs/remotes/origin/master
 
 import com.blackparty.questionclassifier.core.RelationshipExtractor;
 import com.blackparty.questionclassifier.core.Splitter;
@@ -134,7 +108,7 @@ public class QController {
 		System.out.println("MESSAGE = "+message);
 		try{
 			//JWNL initialization
-			JWNL.initialize(new FileInputStream("D:\\Our Files\\Eric\\J2EE Mars\\question-classifier\\question-classifier\\questionclassifier\\WebContent\\jwnl_properties.xml"));
+			JWNL.initialize(new FileInputStream("D:\\Yeyah\\School\\Thesis\\question-classifier\\questionclassifier\\WebContent\\jwnl_properties.xml"));
 			final Dictionary dictionary = Dictionary.getInstance();
 			
 			

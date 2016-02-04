@@ -42,5 +42,4 @@ public class AppConfig extends WebMvcConfigurerAdapter{
         messageSource.setBasename("messages");
         return messageSource;
     }
-    
 }
