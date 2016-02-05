@@ -85,11 +85,12 @@ public class Uploader {
 			System.out.print("it's empty");
 		} else {
 			ArrayList<Item> byitem = parseQandC(byPage);
-			setRectangle(byitem,userDirectory + "/" + file.getOriginalFilename(),convertedFile);
+			String nfilename = file.getOriginalFilename().split("\\.")[0];
+			setRectangle(byitem,userDirectory + "/" + nfilename,convertedFile);
 		}
 		return flag;
 	}
-
+	
 	public ArrayList<Page> processTextPosition(File file) throws IOException {
 		System.out.print("ProcessTextPosition Method >>");
 		PDDocument document = null;
@@ -286,7 +287,7 @@ public class Uploader {
 			PDDocument croppedDoc = null;
 			croppedDoc = new PDDocument();
 			croppedDoc.addPage(page);
-			croppedDoc.save(userDirectory + byitem.get(index).getItemNumber()+ ".pdf");
+			croppedDoc.save(userDirectory + "-"+byitem.get(index).getItemNumber()+ ".pdf");
 			croppedDoc.close();
 		}
 		document.close();

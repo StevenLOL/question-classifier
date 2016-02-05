@@ -4,8 +4,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Collection;
 
-import javax.servlet.ServletContext;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,12 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-<<<<<<< HEAD
-=======
-
-
->>>>>>> master
-import edu.stanford.nlp.ling.IndexedWord;
 import edu.stanford.nlp.trees.TypedDependency;
 import net.didion.jwnl.JWNL;
 import net.didion.jwnl.JWNLException;
@@ -26,7 +18,6 @@ import net.didion.jwnl.data.IndexWord;
 import net.didion.jwnl.data.POS;
 import net.didion.jwnl.data.PointerUtils;
 import net.didion.jwnl.data.list.PointerTargetNodeList;
-import net.didion.jwnl.data.list.PointerTargetTree;
 import net.didion.jwnl.dictionary.Dictionary;
 
 import com.blackparty.questionclassifier.core.RelationshipExtractor;
@@ -36,8 +27,6 @@ import com.blackparty.questionclassifier.core.TaggerImpl;
 import com.blackparty.questionclassifier.core.Uploader;
 import com.blackparty.questionclassifier.models.QuestionItem;
 import com.blackparty.questionclassifier.models.User;
-
-import edu.stanford.nlp.trees.TypedDependency;
 
 
 @Controller
