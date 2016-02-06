@@ -33,7 +33,6 @@ public class UserController {
 		String destination ="login";
 		System.out.println("Running UserController.login() method.");
 		User fetchedUser = um.getUser(username);
-		System.out.println(fetchedUser.toString());
 		if(fetchedUser.getPassword().contentEquals(password)){
 			destination = "home";
 		}else{
