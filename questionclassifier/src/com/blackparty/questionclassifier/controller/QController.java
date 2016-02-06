@@ -35,7 +35,7 @@ public class QController {
 	private String systemMessage;
 	private boolean flag;
 	@RequestMapping(value = "/feed")
-	public ModelAndView showFeedPage(@RequestParam("file") MultipartFile file,
+	public ModelAndView showFeedPage(@RequestParam(value = "file") MultipartFile file,
 			@ModelAttribute("user_object") User user) {
 		if (!file.isEmpty()) {
 			try {
@@ -54,7 +54,6 @@ public class QController {
 		mav.addObject("system_message",systemMessage);
 		return mav;
 	}
-
 
 	@RequestMapping(value = "/relational_dependency")
 	public ModelAndView getRelationalDependency(@RequestParam(value = "message", required = true) String input) {

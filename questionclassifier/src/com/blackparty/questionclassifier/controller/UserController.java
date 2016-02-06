@@ -55,11 +55,6 @@ public class UserController {
 		return mav;
 	}
 
-	@RequestMapping("/feed")
-	public ModelAndView formpage(HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView("feed-page");
-		return mav;
-	}
 
 	@RequestMapping("/dashboard")
 	public ModelAndView dashboard(HttpServletRequest request) {
