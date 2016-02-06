@@ -347,7 +347,8 @@
 							class="fa fa-angle-left pull-right"></i>
 					</a>
 						<ul class="treeview-menu">
-							<li><a href="form"><i class="fa fa-circle-o"></i> Feed</a></li>
+							<li><a href="feed-page"><i class="fa fa-circle-o"></i>
+									Feed</a></li>
 							<li><a href="pages/forms/advanced.html"><i
 									class="fa fa-circle-o"></i> Advanced Elements</a></li>
 							<li><a href="pages/forms/editors.html"><i
@@ -389,13 +390,14 @@
 							</div>
 							<!-- /.box-header -->
 							<!-- form start -->
-							<form role="form" method="POST" enctype="multipart/form-data" action="feed">
+							<form role="form" method="POST" enctype="multipart/form-data"
+								action="feed">
 								<div class="box-body">
 
 
 									<div class="form-group">
 										<label for="exampleInputFile">File input</label> <input
-											type="file" id="exampleInputFile">
+											type="file" name="file" id="exampleInputFile">
 
 										<p class="help-block">Upload a PDF file.</p>
 									</div>
