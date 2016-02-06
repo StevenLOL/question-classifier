@@ -55,9 +55,9 @@ public class UserController {
 		return mav;
 	}
 
-	@RequestMapping("/form")
+	@RequestMapping("/feed")
 	public ModelAndView formpage(HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView("form");
+		ModelAndView mav = new ModelAndView("feed-page");
 		return mav;
 	}
 
