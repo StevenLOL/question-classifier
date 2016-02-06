@@ -1,10 +1,13 @@
+com\blackparty\questionclassifier\core\Uploader$1.class
 com\blackparty\questionclassifier\core\RelationshipExtractor.class
 com\blackparty\questionclassifier\service\UserService.class
 com\blackparty\questionclassifier\core\Tagger.class
 com\blackparty\questionclassifier\models\Sentence.class
 com\blackparty\questionclassifier\models\User.class
 com\blackparty\questionclassifier\core\Splitter.class
+com\blackparty\questionclassifier\models\Item.class
 com\blackparty\questionclassifier\core\Uploader.class
+com\blackparty\questionclassifier\models\Page.class
 com\blackparty\questionclassifier\models\Word.class
 com\blackparty\questionclassifier\models\QuestionItem.class
 com\blackparty\questionclassifier\core\TaggerImpl.class
