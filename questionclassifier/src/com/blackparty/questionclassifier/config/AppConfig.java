@@ -1,6 +1,5 @@
 package com.blackparty.questionclassifier.config;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor;
 import org.springframework.context.MessageSource;
@@ -51,4 +50,15 @@ public class AppConfig extends WebMvcConfigurerAdapter{
         multipartResolver.setMaxUploadSize(50000000);
         return multipartResolver;
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }

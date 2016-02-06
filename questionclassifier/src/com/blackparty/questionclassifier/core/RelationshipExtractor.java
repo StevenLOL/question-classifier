@@ -25,7 +25,7 @@ public class RelationshipExtractor {
     public Collection<TypedDependency> extract(String input){
         System.out.println("Input = "+input);
         LexicalizedParser lp = LexicalizedParser.loadModel(
-        		"D:\\Yeyah\\School\\Thesis\\question-classifier\\questionclassifier\\lib\\englishPCFG.ser.gz",
+        		"\\E:\\Black Party\\question-classifier\\questionclassifier\\lib\\englishPCFG.ser.gz",
         		"-maxLength",
         		"80", "-retainTmpSubcategories");
         TreebankLanguagePack tlp = new PennTreebankLanguagePack();

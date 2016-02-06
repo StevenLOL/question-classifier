@@ -1,5 +1,7 @@
 package com.blackparty.questionclassifier.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -12,6 +14,12 @@ public class NavigationController {
 	@RequestMapping(value = "/")
 	public ModelAndView index() {
 		ModelAndView mav = new ModelAndView("login", "message", "Running QController.index()");
+		return mav;
+	}
+	
+	@RequestMapping("/feed-page")
+	public ModelAndView formpage(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView("feed-page");
 		return mav;
 	}
 	

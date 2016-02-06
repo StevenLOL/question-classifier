@@ -1,5 +1,10 @@
 Manifest-Version: 1.0
+<<<<<<< HEAD
 Built-By: MimiKuchiki
 Build-Jdk: 1.8.0_60
+=======
+Built-By: Court
+Build-Jdk: 1.8.0_40
+>>>>>>> master
 Created-By: Maven Integration for Eclipse
 
