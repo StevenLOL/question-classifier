@@ -22,6 +22,7 @@ import com.blackparty.questionclassifier.service.UserService;
 @Controller
 @SessionAttributes("user_object")
 public class UserController {
+	private String systemMessage = " ";
 
 	@Autowired
 	UserService um;
@@ -32,42 +33,32 @@ public class UserController {
 		String destination = "login";
 		System.out.println("Running UserController.login() method.");
 		User fetchedUser = um.getUser(username);
-<<<<<<< HEAD
-		System.out.println(fetchedUser.toString());
-		if(fetchedUser.getPassword().contentEquals(password)){
-			destination = "home";
-		}else{
-=======
 		ModelAndView mav = null;
+		System.out.println(fetchedUser.toString());
+
 		if (fetchedUser.getPassword().contentEquals(password)) {
 			destination = "dashboard";
 			mav = new ModelAndView(destination, "message", "Running QController.login() method.");
 			mav.addObject("user_object", fetchedUser);
+			System.out.println(systemMessage);
 		} else {
->>>>>>> master
-			destination = "login";
 			mav = new ModelAndView(destination, "message", "Running QController.login() method.");
+			this.systemMessage = "Login not successful";
+			System.out.println(systemMessage);
 		}
-
+		mav.addObject("system_message", this.systemMessage);
 		return mav;
 	}
 
 	@RequestMapping("/logout")
 	public ModelAndView logout(@ModelAttribute("user_object") User userObject, BindingResult bindingResult,
 			SessionStatus sessionStatus) {
-
 		ModelAndView mav = new ModelAndView("login");
 		sessionStatus.setComplete();
-
 		return mav;
 	}
 
-
-	@RequestMapping("/dashboard")
-	public ModelAndView dashboard(HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView("dashboard");
-		return mav;
-	}
+	
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public ModelAndView register(@RequestParam(defaultValue = "ciremagz", value = "username") String username,

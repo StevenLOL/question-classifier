@@ -1,0 +1,19 @@
+package com.blackparty.questionclassifier.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.blackparty.questionclassifier.DAO.FlagCodeDAO;
+import com.blackparty.questionclassifier.models.FlagCode;
+import com.blackparty.questionclassifier.models.QuestionProcessed;
+
+@Service
+public class QuestionProcessedService {
+
+	@Autowired
+	private QuestionProcessed qpDao;
+	
+	public FlagCode getFlag(String code){
+		return flagCodeDao.getFlag(code);
+	}
+}

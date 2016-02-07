@@ -10,7 +10,7 @@ import com.blackparty.questionclassifier.DAO.UserDAO;
 import com.blackparty.questionclassifier.models.User;
 
 @Service
-public class UserService {
+public class UserService{
 	
 	@Autowired
 	private UserDAO userDao;
@@ -23,5 +23,8 @@ public class UserService {
 	}
 	public void deleteUser(int userId){
 		userDao.deleteUser(userId);
+	}
+	public void updateUser(User user){
+		userDao.updateUser(user);
 	}
 }

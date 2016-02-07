@@ -1,0 +1,24 @@
+package com.blackparty.questionclassifier.DAO;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.blackparty.questionclassifier.models.FlagCode;
+import com.blackparty.questionclassifier.models.QuestionProcessed;
+
+@Repository
+@Transactional
+public class FlagCodeDAO {
+
+	public SessionFactory sf;
+	
+	@SuppressWarnings("unchecked")
+	public FlagCode getFlag(int id){
+		QuestionProcessed qp = null;
+		Session session = sf.openSession();
+		qp = (QuestionProcessed)session.get(QuestionProcessed.class,id);
+		return qp;
+	}
+}
