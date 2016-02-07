@@ -1,0 +1,26 @@
+package com.blackparty.questionclassifier.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.blackparty.questionclassifier.DAO.UserDAO;
+import com.blackparty.questionclassifier.models.User;
+
+
+@Service
+public class QuestionItemService {
+	@Autowired
+	private UserDAO userDao;
+	public void addUser(User user){
+		userDao.addUser(user);
+	}
+	public User getUser(String username){
+		User user = userDao.getUser(username);
+		return user;
+	}
+	public void deleteUser(int userId){
+		userDao.deleteUser(userId);
+	}
+	public void updateUser(User user){
+		userDao.updateUser(user);
+	}
+}

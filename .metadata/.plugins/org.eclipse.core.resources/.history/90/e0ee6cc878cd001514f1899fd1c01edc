@@ -1,0 +1,16 @@
+package com.blackparty.questionclassifier.models;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity 
+@Table (name="FLAG_CODE_TABLE")
+public class FlagCode {
+	
+	@Id
+	@Column(name="FLAG_CODE")
+	private String flagCode;
+	@Column(name="FLAG_NAME")
+	private String flagName;
+}

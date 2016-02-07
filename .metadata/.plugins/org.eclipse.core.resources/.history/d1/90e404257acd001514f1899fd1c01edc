@@ -1,0 +1,5 @@
+package com.blackparty.questionclassifier.service;
+
+public class FlagCodeService {
+
+}
