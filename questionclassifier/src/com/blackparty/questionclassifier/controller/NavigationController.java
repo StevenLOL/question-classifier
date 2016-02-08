@@ -16,13 +16,22 @@ public class NavigationController {
 		ModelAndView mav = new ModelAndView("login", "message", "Running QController.index()");
 		return mav;
 	}
+
+	
+	@RequestMapping("/ajaxsample")
+	public ModelAndView ajaxsamplepage() {
+		ModelAndView mav = new ModelAndView("ajaxsample");
+		return mav;
+	}
+
 	@RequestMapping("/dashboard")
 	public ModelAndView dashboard(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("dashboard");
 		return mav;
 	}
+
 	@RequestMapping("/feed-page")
-	public ModelAndView formpage(HttpServletRequest request) {
+	public ModelAndView formpage() {
 		ModelAndView mav = new ModelAndView("feed-page");
 		return mav;
 	}
