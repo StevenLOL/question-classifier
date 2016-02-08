@@ -19,6 +19,7 @@
 				<td>Question</td>
 				<td>Type of Question</td>
 				<td>Year</td>
+				<td>Actions</td>
 			</tr>
 		</thead>
 		<tbody>
