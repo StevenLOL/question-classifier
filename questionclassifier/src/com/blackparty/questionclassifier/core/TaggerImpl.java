@@ -12,7 +12,7 @@ public class TaggerImpl implements Tagger{
 	
 	@Override
 	public String tag(String input) {
-		MaxentTagger tagger = new MaxentTagger("D:\\Our Files\\Eric\\J2EE Mars\\question-classifier\\question-classifier\\questionclassifier\\lib\\english-left3words\\english-left3words-distsim.tagger");
+		MaxentTagger tagger = new MaxentTagger("D:\\Yeyah\\School\\Thesis\\question-classifier\\questionclassifier\\lib\\english-left3words\\english-left3words-distsim.tagger");
 		String tagged = tagger.tagString(input);
 		System.out.println("Input = "+input);
 		System.out.println(tagged);
@@ -22,7 +22,7 @@ public class TaggerImpl implements Tagger{
 	
 	@Override
 	public QuestionItem tag(QuestionItem qi) {
-		MaxentTagger tagger = new MaxentTagger("D:\\Our Files\\Eric\\J2EE Mars\\question-classifier\\question-classifier\\questionclassifier\\lib\\english-left3words\\english-left3words-distsim.tagger");
+		MaxentTagger tagger = new MaxentTagger("D:\\Yeyah\\School\\Thesis\\question-classifier\\questionclassifier\\lib\\english-left3words\\english-left3words-distsim.tagger");
 		String[] tagged;
 		//System.out.println("Running Question item tag..");
 		for(Sentence s:qi.getSentences()){

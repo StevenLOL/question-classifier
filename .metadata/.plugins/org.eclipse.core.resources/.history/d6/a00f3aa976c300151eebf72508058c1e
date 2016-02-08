@@ -1,5 +1,0 @@
-package com.blackparty.questionclassifier.core;
-
-public class TaggerImpl {
-
-}

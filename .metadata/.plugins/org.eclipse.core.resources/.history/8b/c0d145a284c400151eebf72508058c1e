@@ -1,5 +1,0 @@
-package com.blackparty.questionclassifier.config;
-
-public class PersistenceConfig {
-
-}
