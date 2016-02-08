@@ -1,0 +1,36 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Result Page</title>
+</head>
+<body>
+	<thead>
+		<tr>
+			<th>Existing Questions</th>
+		</tr>
+	</thead>
+	<thead>
+		<tr>
+			<td>Category</td>
+			<td>Question</td>
+			<td>Type of Question</td>
+			<td>Year</td>
+		</tr>
+	</thead>
+	<tbody>
+		<!-- place your questions here -->
+		<c:forEach var="questions" items="${list_of_questions}">
+			<tr>
+				<td>${questions.getCategory()}</td>
+				<td>${questions.getOriginalBody()}</td>
+				<td>${questions.getType()}</td>
+				<td>${questions.getYear()}</td>
+				<td><a href="view?question_id=${question.getQuestionId()}"><button>View</button></a></td>
+			</tr>
+		</c:forEach>
+	</tbody>
+</body>
+</html>

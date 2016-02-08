@@ -1,0 +1,84 @@
+package com.blackparty.questionclassifier.models;
+
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+public class QuestionItem {
+	private List<Sentence> sentences;
+	
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name = "USERID")
+	private int questionId;
+	
+	private int year;
+	private int questionNumber;
+	
+	private String category;
+	private String type;
+	private String username;
+	
+	
+	private String originalBody;
+	private String questionIsolated;
+	
+	public QuestionItem(){}
+	
+	public QuestionItem(List<Sentence> sentences){
+		this.sentences = sentences;
+	}
+	
+	public QuestionItem(int year, int questionNumber){
+		this.year = year;
+		this.questionNumber = questionNumber;
+	}
+
+	public List<Sentence> getSentences() {
+		return sentences;
+	}
+
+	public void setSentenceList(List<Sentence> sentences) {
+		this.sentences = sentences;
+	}
+
+	public int getYear() {
+		return year;
+	}
+
+	public void setYear(int year) {
+		this.year = year;
+	}
+
+	public int getQuestionNumber() {
+		return questionNumber;
+	}
+
+	public void setQuestionNumber(int questionNumber) {
+		this.questionNumber = questionNumber;
+	}
+	
+	public void displayWordValues(){
+		System.out.println("display word values..");
+        for(Sentence s : getSentences()){
+            for(Word w: s.getWordList()){
+                System.out.println(w.getWord());
+            }
+        }
+    }
+	
+	public void displayWordWithTags(){
+		System.out.println("display word with tags...");
+		for(Sentence s:getSentences()){
+			for(Word w: s.getWordList()){
+				System.out.println(w.toStringWithTag());
+			}
+		}
+		
+	}
+	
+}

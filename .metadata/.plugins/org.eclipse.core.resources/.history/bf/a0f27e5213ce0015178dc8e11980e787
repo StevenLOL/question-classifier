@@ -1,0 +1,142 @@
+package com.blackparty.questionclassifier.models;
+
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+
+@Entity
+@Table(name="QUESTION_ITEM_TABLE")
+public class QuestionItem {
+	
+	@Transient
+	private List<Sentence> sentences;
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name = "QUESTION_ID")
+	private int questionId;
+	
+	@Column(name = "YEAR")
+	private int year;
+
+	@Column(name = "CATEGORY")
+	private String category;
+	
+	@Column(name = "TYPE")
+	private String type;
+	
+	@Column(name = "USER_ID")
+	private int userId;
+	
+	@Column(name = "QUESTION_ORIGINAL_BODY")
+	private String originalBody;
+	
+	@Column(name = "QUESITON_ISOLATED")
+	private String isolated;
+	
+	public QuestionItem(){}
+	
+	public QuestionItem(String originalBody){
+		this.originalBody = originalBody;
+	}
+	public QuestionItem(List<Sentence> sentences){
+		this.sentences = sentences;
+	}
+	
+	public List<Sentence> getSentences() {
+		return sentences;
+	}
+
+	public void setSentenceList(List<Sentence> sentences) {
+		this.sentences = sentences;
+	}
+
+	public int getYear() {
+		return year;
+	}
+
+	public void setYear(int year) {
+		this.year = year;
+	}
+
+	public int getQuestionId() {
+		return questionId;
+	}
+
+	public void setQuestionId(int questionId) {
+		this.questionId = questionId;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+
+	public String getOriginalBody() {
+		return originalBody;
+	}
+
+	public void setOriginalBody(String originalBody) {
+		this.originalBody = originalBody;
+	}
+
+	public String getIsolated() {
+		return isolated;
+	}
+
+	public void setIsolated(String isolated) {
+		this.isolated = isolated;
+	}
+
+	public void setSentences(List<Sentence> sentences) {
+		this.sentences = sentences;
+	}
+
+	public void displayWordValues(){
+		System.out.println("display word values..");
+        for(Sentence s : getSentences()){
+            for(Word w: s.getWordList()){
+                System.out.println(w.getWord());
+            }
+        }
+    }
+	
+	public void displayWordWithTags(){
+		System.out.println("display word with tags...");
+		for(Sentence s:getSentences()){
+			for(Word w: s.getWordList()){
+				System.out.println(w.toStringWithTag());
+			}
+		}
+		
+	}
+	
+}

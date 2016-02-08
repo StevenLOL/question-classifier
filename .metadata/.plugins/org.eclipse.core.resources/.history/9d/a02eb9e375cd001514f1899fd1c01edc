@@ -1,0 +1,20 @@
+package com.blackparty.questionclassifier.models;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="QUESTION_CATEGORY_TABLE")
+public class QuestionCategory {
+	private String code;
+	private String levelName;
+	
+	public QuestionCategory(){}
+	public QuestionCategory(String code, String levelName) {
+		super();
+		this.code = code;
+		this.levelName = levelName;
+	}
+	
+	
+}

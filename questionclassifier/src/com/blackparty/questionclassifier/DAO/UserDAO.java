@@ -14,12 +14,11 @@ import com.blackparty.questionclassifier.models.User;
 @Repository
 @Transactional
 public class UserDAO {
-
+	
 	@Autowired
 	private SessionFactory sf;
 	
 	public void addUser(User u) {
-		
 		Session session = sf.openSession();
 		session.save(u);
 		session.flush();
@@ -36,6 +35,14 @@ public class UserDAO {
 		return user;
 	}
 
+	
+	public void updateUser(User newUser){
+		Session session = sf.openSession();
+		User oldUser = (User)session.get(User.class,newUser.getUserId());
+		session.update(newUser);
+		session.flush();
+		session.close();
+	}
 	public void deleteUser(int userId) {
 		Session session = sf.openSession();
 		User user = (User)session.get(User.class,userId);
