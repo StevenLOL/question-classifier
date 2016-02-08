@@ -1,8 +1,6 @@
 package com.blackparty.questionclassifier.core;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +10,7 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
 import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.apache.pdfbox.exceptions.CryptographyException;
 import org.apache.pdfbox.exceptions.InvalidPasswordException;
@@ -20,8 +19,8 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.util.PDFTextStripper;
 import org.apache.pdfbox.util.TextPosition;
-
 import org.springframework.web.multipart.MultipartFile;
+
 
 import com.blackparty.questionclassifier.models.Item;
 import com.blackparty.questionclassifier.models.Page;
@@ -29,7 +28,6 @@ import com.blackparty.questionclassifier.models.User;
 
 public class Uploader {
 	private static String question_regex = "^(\\[X=\\d*\\.?\\d*\\]\\[Y=\\d*\\.?\\d*\\])\\s*(Q\\d+\\.)\\s*(.*([^a-zA-Z\\d+]|[.*]))+";
-
 	private String dataDirectory = System.getProperty("catalina.base")
 			+ "/User";
 
@@ -60,18 +58,17 @@ public class Uploader {
 	public boolean upload(MultipartFile file, User user, String category)
 			throws Exception {
 
-		byte[] bytes = file.getBytes();
+		//byte[] bytes = file.getBytes();
 		String userDirectory = dataDirectory + "/" + user.getUsername();
 		userDirectoryValidate(userDirectory, user);
-		userDirectory = dataDirectory + "/" + user.getUsername() + "/"
-				+ category;
+		userDirectory = dataDirectory + "/" + user.getUsername() + "/";
 		File convertedFile = multipartToFile(file);
-		FileOutputStream bos = new FileOutputStream(userDirectory + "/"
-				+ convertedFile);
-		BufferedOutputStream stream = new BufferedOutputStream(bos);
-		stream.write(bytes);
-		stream.close();
-		bos.close();
+		//FileOutputStream bos = new FileOutputStream(userDirectory + "/"
+		//		+ convertedFile);
+		//BufferedOutputStream stream = new BufferedOutputStream(bos);
+		//stream.write(bytes);
+		//stream.close();
+		//bos.close();
 		System.out.println("Uncropped File uploaded at " + userDirectory);
 
 		/*
@@ -84,9 +81,10 @@ public class Uploader {
 		if (byPage.isEmpty()) {
 			System.out.print("it's empty");
 		} else {
-			ArrayList<Item> byitem = parseQandC(byPage);
 			String nfilename = file.getOriginalFilename().split("\\.")[0];
-			setRectangle(byitem,userDirectory + "/" + nfilename,convertedFile);
+			ArrayList<Item> byitem = parseQandC(byPage, nfilename);
+			byitem = getItemPositiononPage(byitem);
+			setRectangle(byitem,userDirectory + "/",convertedFile);
 		}
 		return flag;
 	}
@@ -152,7 +150,21 @@ public class Uploader {
 		document.close();
 		return byPage;
 	}
-
+	public ArrayList<Item> getItemPositiononPage(ArrayList<Item> byitem){
+		int flag=0;
+		System.out.println("getItemPositiononPage");
+		for(int i=0; i < byitem.size() ; i++){
+			if((i!=0 ) && byitem.get(i).getPagenum() == byitem.get(i-1).getPagenum()){
+				flag++;
+				byitem.get(i).setPosition(flag);
+			}else{
+				flag=0;
+				byitem.get(i).setPosition(flag);
+			}
+			//System.out.println(byitem.get(i).getItemNumber() +"  >  "+byitem.get(i).getPosition());
+		}
+		return byitem;
+	}
 	/*
 	 * public boolean upload(MultipartFile file, User user, String category)
 	 * throws Exception { byte[] bytes = file.getBytes(); String userDirectory =
@@ -178,6 +190,7 @@ public class Uploader {
 			File f2 = new File(userDirectory + "/Process");
 			File f3 = new File(userDirectory + "/Understanding");
 			File f4 = new File(userDirectory + "/Product");
+			File f5 = new File(userDirectory + "/temp");
 			f1.mkdir();
 			System.out.println("Knowledge folder for " + user.getUsername()
 					+ " is created.");
@@ -190,11 +203,14 @@ public class Uploader {
 			f4.mkdir();
 			System.out.println("Product folder for " + user.getUsername()
 					+ " is created.");
+			f5.mkdir();
+			System.out.println("temp folder for " + user.getUsername()
+					+ " is created.");
 		}
 		return false;
 	}
 
-	public ArrayList<Item> parseQandC(ArrayList<Page> bypage) throws IOException {
+	public ArrayList<Item> parseQandC(ArrayList<Page> bypage, String filename) throws IOException {
 		System.out.println("parseQandC");
 		double[] coordinates = new double[2];
 		ArrayList<Item> byitem = new ArrayList<Item>();
@@ -208,8 +224,9 @@ public class Uploader {
 				q_matcher = q_regex.matcher(line);
 				while (q_matcher.find()) {
 					String token = q_matcher.group(0);
-					System.out.println("page ==  token > "+perPage.getPagenum()+" ==  " + token);
+					//System.out.println("page ==  token > "+perPage.getPagenum()+" ==  " + token);
 					Item item = new Item();
+					item.setFilename(filename);
 					item.setItemNumber("Q" + (index + 1));
 					item.setPageNum(perPage.getPagenum());
 					coordinates = getFloat(line);
@@ -258,19 +275,25 @@ public class Uploader {
 		}
 		return digit;
 	}
-
-	public void setRectangle(ArrayList<Item> byitem, String userDirectory, File file) throws IOException, COSVisitorException{
+	
+	public void setRectangle(ArrayList<Item> byitem, String userDirectory, File file){
 
 		PDDocument document = null;
-
-		document = PDDocument.load(file);
-		for(int index =0 ; index < byitem.size(); index++){
+		try {
+			document = PDDocument.load(file);
+		for(int index =0 ; index < byitem.size()+1; index++){
 			PDRectangle rectangle = new PDRectangle();
-
 			PDPage page = (PDPage) document.getDocumentCatalog().getAllPages().get(byitem.get(index).getPagenum()-1);
-			System.out.println("MAO NI PAGE GI PROCESS " + page);
-			System.out.println("THIS IS the text" + byitem.get(index).getText());
-			System.out.println("THIS IS PAGE" + byitem.get(index).getPagenum()+"\n\n\n");
+			
+			PDDocument doc = new PDDocument();
+			doc.addPage(page);
+			
+			PdfTextParser parser = new PdfTextParser();
+			String question = parser.parseText(doc, byitem.get(index).getPosition());
+			System.out.println("returned question "+question);
+			byitem.get(index).setQuestion(question);
+			byitem.get(index).setCategory("Knowledge");
+			doc.close();
 			
 			if ((index + 1) < byitem.size()+1 && byitem.get(index).getPagenum() == byitem.get(index+1).getPagenum()) {
 				rectangle.setUpperRightY(842 - ((float) byitem.get(index + 1).getyCoordinate() - 20));
@@ -280,6 +303,7 @@ public class Uploader {
 													// (float)byitem.get(i+1).getyCoordinate()+20
 				rectangle.setLowerLeftY(842 - 782); // 0.0
 			}
+
 			rectangle.setUpperRightX(page.findCropBox().getUpperRightX());
 			rectangle.setLowerLeftX(page.findCropBox().getLowerLeftX());
 			page.setCropBox(rectangle);
@@ -287,9 +311,19 @@ public class Uploader {
 			PDDocument croppedDoc = null;
 			croppedDoc = new PDDocument();
 			croppedDoc.addPage(page);
-			croppedDoc.save(userDirectory + "-"+byitem.get(index).getItemNumber()+ ".pdf");
+
+			croppedDoc.save(userDirectory+byitem.get(index).getCategory()+"/"+byitem.get(index).getFilename() + "-"+byitem.get(index).getItemNumber()+ ".pdf");
 			croppedDoc.close();
+
 		}
-		document.close();
+			document.close();
+
+		} catch (IOException e) {
+				// TODO Auto-generated catch block
+				System.out.println(">> "+e+" setRectangle");
+			} catch (COSVisitorException e) {
+			System.out.println( ">> "+e+" setRectangle");
+		}
 	}
+	
 }
