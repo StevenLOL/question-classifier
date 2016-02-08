@@ -22,6 +22,8 @@ public class QuestionProcessed {
 	private int questionId;
 	@Column(name="FLAG_CODE")
 	private String flagCode;
+	@Column(name="DIRECTORY")
+	private String directory;
 	
 	public QuestionProcessed(){}
 
@@ -47,6 +49,14 @@ public class QuestionProcessed {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getDirectory() {
+		return directory;
+	}
+
+	public void setDirectory(String directory) {
+		this.directory = directory;
 	}
 	
 	
