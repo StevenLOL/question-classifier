@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="org.springframework.web.servlet.view.InternalResourceViewResolver"/>
-<fullyQualifiedTypeName name="org.springframework.web.servlet.view.JstlView"/>
-<fullyQualifiedTypeName name="org.springframework.context.MessageSource"/>
-<fullyQualifiedTypeName name="org.springframework.context.support.ResourceBundleMessageSource"/>
-<fullyQualifiedTypeName name="org.springframework.context.annotation.Configuration"/>
-<fullyQualifiedTypeName name="org.springframework.transaction.annotation.EnableTransactionManagement"/>
-<fullyQualifiedTypeName name="org.hibernate.cfg.Environment"/>
 <fullyQualifiedTypeName name="org.springframework.ejb.access.LocalStatelessSessionProxyFactoryBean"/>
 <fullyQualifiedTypeName name="org.springframework.orm.hibernate4.LocalSessionFactoryBean"/>
 <fullyQualifiedTypeName name="org.springframework.orm.hibernate3.HibernateTransactionManager"/>
@@ -31,26 +24,20 @@
 <fullyQualifiedTypeName name="com.blackparty.questionclassifier.DAO.UserDAO"/>
 <fullyQualifiedTypeName name="org.hibernate.Query"/>
 <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.ModelAttribute"/>
-<fullyQualifiedTypeName name="javax.persistence.GeneratedValue"/>
 <fullyQualifiedTypeName name="javax.persistence.SequenceGenerator"/>
-<fullyQualifiedTypeName name="javax.persistence.GenerationType"/>
 <fullyQualifiedTypeName name="org.springframework.context.annotation.Bean"/>
 <fullyQualifiedTypeName name="net.didion.jwnl.JWNL"/>
 <fullyQualifiedTypeName name="java.io.FileInputStream"/>
 <fullyQualifiedTypeName name="java.io.FileNotFoundException"/>
 <fullyQualifiedTypeName name="java.lang.System"/>
 <fullyQualifiedTypeName name="javax.servlet.ServletContext"/>
-<fullyQualifiedTypeName name="com.blackparty.questionclassifier.models.QuestionItem"/>
-<fullyQualifiedTypeName name="com.blackparty.questionclassifier.DAO.QuestionItemDAO"/>
 <fullyQualifiedTypeName name="java.lang.SuppressWarnings"/>
 <fullyQualifiedTypeName name="javax.persistence.Entity"/>
 <fullyQualifiedTypeName name="javax.persistence.Table"/>
-<fullyQualifiedTypeName name="javax.persistence.Id"/>
 <fullyQualifiedTypeName name="javax.persistence.Column"/>
 <fullyQualifiedTypeName name="org.springframework.stereotype.Repository"/>
 <fullyQualifiedTypeName name="org.springframework.transaction.annotation.Transactional"/>
 <fullyQualifiedTypeName name="org.hibernate.SessionFactory"/>
-<fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
 <fullyQualifiedTypeName name="com.blackparty.questionclassifier.DAO.FlagCodeDAO"/>
 <fullyQualifiedTypeName name="com.blackparty.questionclassifier.models.FlagCode"/>
 <fullyQualifiedTypeName name="com.blackparty.questionclassifier.DAO.QuestionCategoryDAO"/>
@@ -60,4 +47,17 @@
 <fullyQualifiedTypeName name="com.blackparty.questionclassifier.models.QuestionProcessed"/>
 <fullyQualifiedTypeName name="com.blackparty.questionclassifier.DAO.QuestionTypeDAO"/>
 <fullyQualifiedTypeName name="com.blackparty.questionclassifier.models.QuestionType"/>
+<fullyQualifiedTypeName name="javax.persistence.Id"/>
+<fullyQualifiedTypeName name="javax.persistence.GeneratedValue"/>
+<fullyQualifiedTypeName name="javax.persistence.GenerationType"/>
+<fullyQualifiedTypeName name="javax.persistence.Transient"/>
+<fullyQualifiedTypeName name="javax.persistence.ManyToOne"/>
+<fullyQualifiedTypeName name="javax.persistence.JoinColumn"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="java.awt.PageAttributes.MediaType"/>
+<fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestMethod"/>
+<fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PathVariable"/>
+<fullyQualifiedTypeName name="com.blackparty.questionclassifier.models.QuestionItem"/>
+<fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
+<fullyQualifiedTypeName name="com.blackparty.questionclassifier.DAO.QuestionItemDAO"/>
 </qualifiedTypeNameHistroy>

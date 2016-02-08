@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.blackparty.questionclassifier.DAO.QuestionItemDAO;
+import com.blackparty.questionclassifier.models.QuestionItem;
 import com.blackparty.questionclassifier.models.User;
 import com.blackparty.questionclassifier.service.UserService;
 import com.blackparty.questionclassifier.service.UserService;
@@ -26,6 +28,8 @@ public class UserController {
 
 	@Autowired
 	UserService um;
+	@Autowired
+	QuestionItemDAO qiDAO;
 
 	@RequestMapping(value = "/login")
 	public ModelAndView login(@RequestParam(value = "username") String username,
@@ -40,6 +44,10 @@ public class UserController {
 			destination = "dashboard";
 			mav = new ModelAndView(destination, "message", "Running QController.login() method.");
 			mav.addObject("user_object", fetchedUser);
+			
+			//fetching all questions for the user
+			List<QuestionItem> qiList = qiDAO.getAllQuestions(fetchedUser.getUserId());
+			mav.addObject("list_of_questions",qiList);
 			System.out.println(systemMessage);
 		} else {
 			mav = new ModelAndView(destination, "message", "Running QController.login() method.");
@@ -57,8 +65,6 @@ public class UserController {
 		sessionStatus.setComplete();
 		return mav;
 	}
-
-	
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public ModelAndView register(@RequestParam(defaultValue = "ciremagz", value = "username") String username,

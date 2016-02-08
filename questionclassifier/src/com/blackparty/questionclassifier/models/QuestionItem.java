@@ -7,14 +7,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 
 @Entity
 @Table(name="QUESTION_ITEM_TABLE")
 public class QuestionItem {
-	private List<Sentence> sentences;
 	
+	@Transient
+	private List<Sentence> sentences;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -30,13 +34,13 @@ public class QuestionItem {
 	@Column(name = "TYPE")
 	private String type;
 	
-	@Column(name = "USERID")
+	@Column(name = "USER_ID")
 	private int userId;
 	
-	@Column(name = "ORIGINAL_BODY")
+	@Column(name = "QUESITON_ORIGINAL_BODY")
 	private String originalBody;
 	
-	@Column(name = "ISOLATED")
+	@Column(name = "QUESITON_ISOLATED")
 	private String isolated;
 	
 	public QuestionItem(){}
@@ -48,7 +52,6 @@ public class QuestionItem {
 		this.sentences = sentences;
 	}
 	
-
 	public List<Sentence> getSentences() {
 		return sentences;
 	}
@@ -65,7 +68,6 @@ public class QuestionItem {
 		this.year = year;
 	}
 
-	
 	public int getQuestionId() {
 		return questionId;
 	}
@@ -116,6 +118,13 @@ public class QuestionItem {
 
 	public void setSentences(List<Sentence> sentences) {
 		this.sentences = sentences;
+	}
+
+
+	@Override
+	public String toString() {
+		return "QuestionItem [category=" + category + ", type=" + type + ", userId=" + userId + ", originalBody="
+				+ originalBody + "]";
 	}
 
 	public void displayWordValues(){

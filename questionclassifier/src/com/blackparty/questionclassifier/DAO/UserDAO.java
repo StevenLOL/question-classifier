@@ -19,7 +19,6 @@ public class UserDAO {
 	private SessionFactory sf;
 	
 	public void addUser(User u) {
-		
 		Session session = sf.openSession();
 		session.save(u);
 		session.flush();
