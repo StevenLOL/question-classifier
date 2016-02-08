@@ -17,8 +17,14 @@ public class NavigationController {
 		return mav;
 	}
 	
+	@RequestMapping("/ajaxsample")
+	public ModelAndView ajaxsamplepage() {
+		ModelAndView mav = new ModelAndView("ajaxsample");
+		return mav;
+	}
+	
 	@RequestMapping("/feed-page")
-	public ModelAndView formpage(HttpServletRequest request) {
+	public ModelAndView formpage() {
 		ModelAndView mav = new ModelAndView("feed-page");
 		return mav;
 	}
