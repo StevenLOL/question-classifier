@@ -12,7 +12,7 @@ public class TaggerImpl implements Tagger{
 	
 	@Override
 	public String tag(String input) {
-		MaxentTagger tagger = new MaxentTagger("D:\\Yeyah\\School\\Thesis\\question-classifier\\questionclassifier\\lib\\english-left3words\\english-left3words-distsim.tagger");
+		MaxentTagger tagger = new MaxentTagger("D:\\Our Files\\Eric\\J2EE Mars\\QCRepo\\question-classifier\\questionclassifier\\lib\\english-left3words\\english-left3words-distsim.tagger");
 		String tagged = tagger.tagString(input);
 		System.out.println("Input = "+input);
 		System.out.println(tagged);
@@ -22,14 +22,15 @@ public class TaggerImpl implements Tagger{
 	
 	@Override
 	public QuestionItem tag(QuestionItem qi) {
-		MaxentTagger tagger = new MaxentTagger("D:\\Yeyah\\School\\Thesis\\question-classifier\\questionclassifier\\lib\\english-left3words\\english-left3words-distsim.tagger");
+		MaxentTagger tagger = new MaxentTagger("D:\\Our Files\\Eric\\J2EE Mars\\QCRepo\\question-classifier\\questionclassifier\\lib\\english-left3words\\english-left3words-distsim.tagger");
 		String[] tagged;
 		//System.out.println("Running Question item tag..");
 		for(Sentence s:qi.getSentences()){
 			for(Word w:s.getWordList()){
-				tagged = tagger.tagString(w.getWord()).split("_");
-				System.out.println("."+tagged.toString());
-				w.setPos(tagged[1]);
+				tagged = tagger.tagString(w.getWordName()).split("_");
+				System.out.println(tagged[1]);
+				//System.out.println("."+tagged.toString());
+				w.setPosTag(tagged[1]);
 			}
 		}	
 		return qi;

@@ -1,0 +1,138 @@
+package com.blackparty.questionclassifier.core;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
+
+import com.blackparty.questionclassifier.models.QuestionItem;
+import com.blackparty.questionclassifier.models.Sentence;
+import com.blackparty.questionclassifier.models.Word;
+
+public class QuestionProcesser {
+	private final String INTERROGATIVE = "interrogative";
+	private final String DECLARATIVE = "declarative";
+	private final String WH_REGEX = "who|what|how|where|when|why|which|whose|whom";
+	private final String PUNCTUATION_REGEX = "[.?]";
+	private final String NOUN = "NN";
+
+	private Tagger t = new TaggerImpl();
+
+	public void startProcess(String input) {
+		QuestionItem qi = distribute(input);
+		qi = t.tag(qi);
+
+		showTagSentence(qi);
+		System.out.println("\nHEAD WORD = " + getHeadWord(qi));
+	}
+
+	public String getHeadWord(QuestionItem qi) {
+		// head words are noun phrases after a wh-word
+		String headword = "";
+		Stack<Word> stack = new Stack<Word>();
+
+		int counter = 0;
+		for (Sentence e : qi.getSentences()) {
+			System.out.println("kind of sentence = " + e.getKindOfSentence());
+			if (e.getKindOfSentence().contentEquals(INTERROGATIVE)) {
+				System.out.println("HITHITHTIHTI");
+				ArrayList<Word> wordList = (ArrayList<Word>) e.getWordList();
+				for (int i = 0; i < wordList.size(); i++) {
+					counter++;
+					if (wordList.get(i).getWordName().matches("?")) {
+						for (int a = counter; a > 0; a--) {
+							if (wordList.get(a).getWordName().matches(WH_REGEX)) {
+								boolean flag = false;
+								while (!stack.isEmpty()) {
+									// pop all until it hits a noun phrase
+									Word word = stack.pop();
+									System.out.println("pop = " + word.getWordName());
+									if (word.getPosTag().matches(NOUN)) {
+										flag = true;
+										headword = headword + " " + word.getWordName();
+									} else {
+										if (flag) {
+											return headword;
+										}
+									}
+								}
+							} else {
+								stack.push(wordList.get(a));
+							}
+						}
+					}
+				}
+			}
+		}
+		return headword;
+	}
+
+	public QuestionItem distribute(String input) {
+		String regex = "[.?]";
+		QuestionItem qi = new QuestionItem();
+		List<Sentence> sentenceList = new ArrayList<>();
+		Sentence s = null;
+
+		String[] split = splitter(input);
+		ArrayList<Word> wordList = new ArrayList<Word>();
+		for (int i = 0; i < split.length; i++) {
+			Word w = new Word();
+			w.setWordName(split[i]);
+			wordList.add(w);
+			System.out.println("> " + w.getWordName());
+			if (wordList.get(wordList.size() - 1).getWordName().matches(regex)) {
+				System.out.println("hit!!!!!!!!!");
+				if (wordList.get(wordList.size() - 1).getWordName().matches(".")) {
+					// sentences that ends with period(.) means either
+					// declarative or imperative.
+					if (s == null) {
+						System.out.println("First Sentence");
+						s = new Sentence();
+						s.setKindOfSentence(DECLARATIVE);
+						s.setWordList(wordList);
+					} else {
+						sentenceList.add(s);
+						s = new Sentence();
+					}
+				} else {
+					// sentence that ends with question mark(?) means
+					// interrogative.
+					if (s == null) {
+						System.out.println("First Sentence");
+						s = new Sentence();
+						s.setKindOfSentence(INTERROGATIVE);
+						s.setWordList(wordList);
+					} else {
+						sentenceList.add(s);
+					}
+				}
+			}
+		}
+		if(s != null){
+			sentenceList.add(e);
+		}
+		qi.setSentences(sentenceList);
+		return qi;
+	}
+
+	public String[] splitter(String input) {
+		// System.out.println("Input = " + input);
+		String regex = " ?(?<!\\G)((?<=[^\\p{Punct}])(?=\\p{Punct})|\\b) ?";
+		return input.split(regex);
+	}
+
+	public QuestionItem showTagSentence(QuestionItem qi) {
+		List<Sentence> sList = qi.getSentences();
+		System.out.println("show tag sentence..\n" + qi.getSentences().size() + "\n");
+		for (Sentence e : sList) {
+			// read each sentence
+			List<Word> wList = e.getWordList();
+
+			// read each word on the sentence list
+			for (int i = 0; i < wList.size(); i++) {
+				System.out.print("[" + wList.get(i).getWordName() + " | ");
+				System.out.print(wList.get(i).getPosTag() + "]");
+			}
+		}
+		return qi;
+	}
+}

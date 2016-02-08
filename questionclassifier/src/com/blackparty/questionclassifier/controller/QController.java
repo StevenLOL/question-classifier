@@ -25,6 +25,7 @@ import net.didion.jwnl.data.list.PointerTargetNodeList;
 import net.didion.jwnl.dictionary.Dictionary;
 
 import com.blackparty.questionclassifier.DAO.QuestionItemDAO;
+import com.blackparty.questionclassifier.core.QuestionProcesser;
 import com.blackparty.questionclassifier.core.RelationshipExtractor;
 import com.blackparty.questionclassifier.core.Splitter;
 import com.blackparty.questionclassifier.core.Tagger;
@@ -85,6 +86,7 @@ public class QController {
 		mav.addObject("input", input);
 		return mav;
 	}
+	
 	@RequestMapping(value = "/pos_tag")
 	public ModelAndView getPosTag(@RequestParam(value = "message") String input) {
 		ModelAndView mav = new ModelAndView("feed", "message", "Running QController.getPostTag()");
@@ -100,12 +102,11 @@ public class QController {
 			){
 		ModelAndView mav = new ModelAndView("feed","message","Running QController.process() method.");
 		
-		Splitter split= new Splitter();
-		QuestionItem qi = split.distribute(input);
-		TaggerImpl tagger = new TaggerImpl();
-		qi.displayWordValues();
-		qi = tagger.tag(qi);
-		qi.displayWordWithTags();
+		
+		
+		
+		QuestionProcesser qp = new QuestionProcesser();
+		qp.startProcess(input);
 		return mav;
 	}
 	
