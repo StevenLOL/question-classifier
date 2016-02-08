@@ -37,10 +37,10 @@ public class QuestionItem {
 	@Column(name = "USER_ID")
 	private int userId;
 	
-	@Column(name = "QUESITON_ORIGINAL_BODY")
+	@Column(name = "QUESTION_ORIGINAL_BODY")
 	private String originalBody;
 	
-	@Column(name = "QUESITON_ISOLATED")
+	@Column(name = "QUESTION_ISOLATED")
 	private String isolated;
 	
 	public QuestionItem(){}
