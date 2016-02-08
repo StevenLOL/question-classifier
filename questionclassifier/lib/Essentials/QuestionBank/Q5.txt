@@ -1,0 +1,2 @@
+By definition of the IEEE754 standard, 32-bit floating point numbers are represented as
+follows:

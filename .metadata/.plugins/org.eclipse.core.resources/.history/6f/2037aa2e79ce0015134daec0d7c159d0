@@ -1,0 +1,285 @@
+package com.blackparty.questionclassifier.core;
+
+import edu.stanford.nlp.tagger.maxent.MaxentTagger;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.*;
+
+public class Classifier {
+    public static void main(String args[]) throws IOException {
+
+        
+        Scanner sc = new Scanner(System.in);
+        
+        String path;
+        
+        System.out.println("Input file path: ");
+        path = sc.nextLine();
+        
+        //----PROCESSING SA QUESTION ITSELF
+        ArrayList<String> question_list = readQuestions(path);
+
+        ArrayList<String> raw_tagged_lines = posTagging(question_list);
+
+        ArrayList<String> stop_words_list = readStopWords();
+
+        ArrayList<String> questions_verbs_list = captureVerbs(raw_tagged_lines, stop_words_list);
+
+        ArrayList<String> unique_words_list = getUniqueWords(questions_verbs_list);
+
+        HashMap<String, Integer> word_frequency_list = getWordFrequency(questions_verbs_list, unique_words_list);
+
+        //----PROCESSING SA KPUP
+        ArrayList<String> knowledge_keywords_list = readKnowledge();
+        ArrayList<String> process_keywords_list = readProcess();
+        ArrayList<String> understanding_keywords_list = readUnderstanding();
+        ArrayList<String> product_keywords_list = readProduct();
+
+        
+        for(String s : question_list){
+            System.out.println(s);
+        }
+        // Get a set of the entries
+        Set set = word_frequency_list.entrySet();
+        // Get an iterator
+        Iterator i = set.iterator();
+        // Display elements
+        while (i.hasNext()) {
+            Map.Entry me = (Map.Entry) i.next();
+            System.out.print(me.getKey() + ": ");
+            System.out.println(me.getValue());
+        }
+
+    }
+
+    //======================================================== PROCESSING SA QUESTION ITSELF
+    /**
+     * READ QUESTIONS FROM FILE *
+     */
+    public static ArrayList<String> readQuestions(String path) throws FileNotFoundException, IOException {
+
+        File f = new File(path);
+        FileInputStream fis_file = new FileInputStream(f);
+        BufferedReader br_file = new BufferedReader(new InputStreamReader(fis_file));
+
+        ArrayList<String> questions = new ArrayList<>();
+
+        String tokens;
+
+        while ((tokens = br_file.readLine()) != null) {
+
+            questions.add(tokens);
+
+        }
+        br_file.close();
+
+        return questions;
+    }
+
+    /**
+     * PERFORM POS TAGGING FOR QUESTIONS *
+     */
+    public static ArrayList<String> posTagging(ArrayList<String> question_list) {
+
+        //question_list are tagged and added to a "raw_taggged_lines" arraylist(uncleaned_tagging/with "_").
+        int a = 0;
+        ArrayList<String> raw_tagged_lines = new ArrayList<>();
+        MaxentTagger tagger = new MaxentTagger("wsj-0-18-left3words-distsim.tagger");
+        for (a = 0; a < question_list.size(); a++) {
+
+            raw_tagged_lines.add(tagger.tagString(question_list.get(a)));
+//            System.out.println(raw_tagged_lines.get(a));
+        }
+
+        return raw_tagged_lines;
+    }
+
+    /**
+     * CAPTURE VERBS AND REMOVED STOP WORDS FROM QUESTIONS*
+     */
+    public static ArrayList<String> captureVerbs(ArrayList<String> raw_tagged_lines, ArrayList<String> stop_words_list) {
+        //raw_tagged_lines(arraylist) are splitted by "_", then concatinated and added to a "cleaned_tagged_lines" arraylist.
+        int b = 0;
+        String[] token;
+        ArrayList<String> questions_verbs_list = new ArrayList<>();
+
+        for (b = 0; b < raw_tagged_lines.size(); b++) {
+
+            StringTokenizer stkn = new StringTokenizer(raw_tagged_lines.get(b));
+            while (stkn.hasMoreTokens()) {
+
+                token = stkn.nextToken().split("_");
+
+                if ("VB".equals(token[1]) || "VBD".equals(token[1]) || "VBG".equals(token[1]) || "VBN".equals(token[1]) || "VBP".equals(token[1]) || "VBZ".equals(token[1])) {
+                    if (!stop_words_list.contains(token[0])) {
+                        questions_verbs_list.add(token[0].toLowerCase());
+                    }
+
+                }
+
+            }
+
+        }
+
+        Collections.sort(questions_verbs_list);
+
+        return questions_verbs_list;
+    }
+
+    /**
+     * READ STOP WORDS FORM FILE *
+     */
+    public static ArrayList<String> readStopWords() throws FileNotFoundException, IOException {
+        File f = new File("StopWords.txt");
+        FileInputStream fis_file = new FileInputStream(f);
+        BufferedReader br_file = new BufferedReader(new InputStreamReader(fis_file));
+
+        ArrayList<String> stop_words = new ArrayList<>();
+
+        String tokens;
+
+        while ((tokens = br_file.readLine()) != null) {
+
+            stop_words.add(tokens);
+
+        }
+
+        br_file.close();
+
+        return stop_words;
+
+    }
+
+    /**
+     * GET UNIQUE WORDS *
+     */
+    public static ArrayList<String> getUniqueWords(ArrayList<String> questions_verbs_list) {
+
+        ArrayList<String> unique_word_list = new ArrayList<>();
+
+        Set<String> unique = new HashSet<>(questions_verbs_list);
+        for (String key : unique) {
+            unique_word_list.add(key);
+
+        }
+
+        Collections.sort(unique_word_list);
+        return unique_word_list;
+    }
+
+    /**
+     * GET WORD FREQUENCY *
+     */
+    public static HashMap<String, Integer> getWordFrequency(ArrayList<String> questions_verbs_list, ArrayList<String> unique_words_list) {
+
+        HashMap<String, Integer> word_frequency_list = new HashMap<>();
+
+        for (int a = 0; a < unique_words_list.size(); a++) {
+
+            word_frequency_list.put(unique_words_list.get(a), Collections.frequency(questions_verbs_list, unique_words_list.get(a)));
+        }
+
+        return word_frequency_list;
+    }
+
+    //======================================================== PROCESSING SA KPUP
+    /**
+     * READ KNOWLEDGE KEYWORDS FROM FILE *
+     */
+    public static ArrayList<String> readKnowledge() throws FileNotFoundException, IOException {
+        File f = new File("Knowledge.txt");
+        FileInputStream fis_file = new FileInputStream(f);
+        BufferedReader br_file = new BufferedReader(new InputStreamReader(fis_file));
+
+        ArrayList<String> knowledge_keywords_list = new ArrayList<>();
+
+        String tokens;
+
+        while ((tokens = br_file.readLine()) != null) {
+
+            knowledge_keywords_list.add(tokens.toLowerCase());
+
+        }
+
+        br_file.close();
+
+        return knowledge_keywords_list;
+
+    }
+
+    /**
+     * READ PROCESS KEYWORDS FROM FILE *
+     */
+    public static ArrayList<String> readProcess() throws FileNotFoundException, IOException {
+        File f = new File("Process.txt");
+        FileInputStream fis_file = new FileInputStream(f);
+        BufferedReader br_file = new BufferedReader(new InputStreamReader(fis_file));
+
+        ArrayList<String> process_keywords_list = new ArrayList<>();
+
+        String tokens;
+
+        while ((tokens = br_file.readLine()) != null) {
+
+            process_keywords_list.add(tokens.toLowerCase());
+
+        }
+
+        br_file.close();
+
+        return process_keywords_list;
+
+    }
+
+    /**
+     * READ UNDERSTANDING KEYWORDS FROM FILE *
+     */
+    public static ArrayList<String> readUnderstanding() throws FileNotFoundException, IOException {
+        File f = new File("Understanding.txt");
+        FileInputStream fis_file = new FileInputStream(f);
+        BufferedReader br_file = new BufferedReader(new InputStreamReader(fis_file));
+
+        ArrayList<String> understanding_keywords_list = new ArrayList<>();
+
+        String tokens;
+
+        while ((tokens = br_file.readLine()) != null) {
+
+            understanding_keywords_list.add(tokens.toLowerCase());
+
+        }
+
+        br_file.close();
+
+        return understanding_keywords_list;
+
+    }
+
+    /**
+     * READ PRODUCT KEYWORDS FROM FILE *
+     */
+    public static ArrayList<String> readProduct() throws FileNotFoundException, IOException {
+        File f = new File("Product.txt");
+        FileInputStream fis_file = new FileInputStream(f);
+        BufferedReader br_file = new BufferedReader(new InputStreamReader(fis_file));
+
+        ArrayList<String> product_keywords_list = new ArrayList<>();
+
+        String tokens;
+
+        while ((tokens = br_file.readLine()) != null) {
+
+            product_keywords_list.add(tokens.toLowerCase());
+
+        }
+
+        br_file.close();
+
+        return product_keywords_list;
+
+    }
+}

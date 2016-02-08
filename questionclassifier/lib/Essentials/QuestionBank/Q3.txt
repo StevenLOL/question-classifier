@@ -1,0 +1,3 @@
+In a floating-point number format, which of the following is the correct operation for
+adjusting the radix point and the exponent so that the most significant digit of the
+mantissa can be a non-zero value? Here, an absolute value is used for the mantissa. 
