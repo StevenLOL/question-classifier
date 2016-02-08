@@ -41,6 +41,7 @@ public class NavigationController {
 	@RequestMapping(value = "/display_question")
 	public ModelAndView displayQuestionPage() {
 		ModelAndView mav = new ModelAndView("display", "message", "Running QController.displayQuestionPage() method.");
+		
 		return mav;
 	}
 	@RequestMapping(value="/register")
@@ -49,4 +50,5 @@ public class NavigationController {
 		return mav;
 		
 	}
+	
 }

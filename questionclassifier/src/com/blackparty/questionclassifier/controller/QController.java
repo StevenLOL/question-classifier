@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
 import edu.stanford.nlp.trees.TypedDependency;
 import net.didion.jwnl.JWNL;
 import net.didion.jwnl.JWNLException;
@@ -20,6 +21,7 @@ import net.didion.jwnl.data.PointerUtils;
 import net.didion.jwnl.data.list.PointerTargetNodeList;
 import net.didion.jwnl.dictionary.Dictionary;
 
+import com.blackparty.questionclassifier.core.PdfTextParser;
 import com.blackparty.questionclassifier.core.RelationshipExtractor;
 import com.blackparty.questionclassifier.core.Splitter;
 import com.blackparty.questionclassifier.core.Tagger;
@@ -42,7 +44,8 @@ public class QController {
 				Uploader u = new Uploader();
 				System.out.println("Uploading File..");
 				
-				u.upload(file,user,"Knowledge");
+				u.upload(file,user,"temp");
+				
 			} catch (Exception e) {
 				systemMessage = "Upload failed";
 				e.getMessage();
