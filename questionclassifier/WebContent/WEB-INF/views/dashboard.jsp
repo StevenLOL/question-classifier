@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -362,8 +362,8 @@
 							<span>Control Panel</span> <i class="fa fa-angle-left pull-right"></i>
 					</a>
 						<ul class="treeview-menu">
-							<li><a href="feed-page"><i
-									class="fa fa-circle-o"></i> Feed</a></li>
+							<li><a href="feed-page"><i class="fa fa-circle-o"></i>
+									Feed</a></li>
 							<li><a href="pages/forms/advanced.html"><i
 									class="fa fa-circle-o"></i> Advanced Elements</a></li>
 							<li><a href="pages/forms/editors.html"><i
@@ -404,16 +404,27 @@
 							<!-- /.box-header -->
 							<div class="box-body">
 								<table id="example2" class="table table-bordered table-hover">
+			
 									<thead>
 										<tr>
-											<th>Existing Questions</th>
+											<td>Category</td>
+											<td>Question</td>
+											<td>Type of Question</td>
+											<td>Year</td>
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td>Trident</td>
-										</tr>
-
+										<!-- place your questions here -->
+										<c:forEach var="questions" items="${list_of_questions}">
+											<tr>
+												<td><c:out value="${questions.getCategory()}"/></td>
+												<td><c:out value ="${questions.getOriginalBody()}"/></td>
+												<td><c:out value ="${questions.getType()}"/></td>
+												<td><c:out value ="${questions.getYear()}"/></td>
+												<td><a href="view?question_id= <c:out value ="${questions.getQuestionId()}"/>"><button>View</button></a></td>
+											
+											</tr>
+										</c:forEach>
 									</tbody>
 									<tfoot>
 										<tr>
@@ -489,7 +500,6 @@
 						</a></li>
 						<li><a href="javascript::;"> <i
 								class="menu-icon fa fa-file-code-o bg-green"></i>
-
 								<div class="menu-info">
 									<h4 class="control-sidebar-subheading">Cron Job 254
 										Executed</h4>
@@ -507,7 +517,6 @@
 									Custom Template Design <span
 										class="label label-danger pull-right">70%</span>
 								</h4>
-
 								<div class="progress progress-xxs">
 									<div class="progress-bar progress-bar-danger"
 										style="width: 70%"></div>

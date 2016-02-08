@@ -1,5 +1,7 @@
 package com.blackparty.questionclassifier.DAO;
 
+import java.util.List;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -13,8 +15,6 @@ import com.blackparty.questionclassifier.models.User;
 @Transactional
 @Repository
 public class QuestionItemDAO {
-
-	
 	
 	@Autowired
 	private SessionFactory sf;
@@ -25,17 +25,28 @@ public class QuestionItemDAO {
 		session.flush();
 		session.close();
 	}
-	
+	public List<QuestionItem> getAllQuestions(int id){
+		System.out.println("getting all questions\n"+id);
+		List<QuestionItem> qiList = null;
+		Session session = sf.openSession();
+		Query query = session.createQuery("from QuestionItem where user_id=:id");
+		query.setInteger("id",id);
+		qiList = query.list();
+		System.out.println(">> "+qiList.size());
+		for(QuestionItem e: qiList){
+			System.out.println(e.toString());
+		}
+		return qiList;
+	}
 	@SuppressWarnings("unchecked")
 	public QuestionItem getQuestion(int id){
 		QuestionItem qi = null;
 		Session session = sf.openSession();
-		Query query = session.createQuery("from QUESTION_ITEM_TABLE where QUESTION_ID=:id");
+		Query query = session.createQuery("from QuestionItem where question_id=:id");
 		query.setInteger("id",id);
 		qi = (QuestionItem)query.uniqueResult();
 		return qi;
 	}
-
 	public void updateQuestion(QuestionItem newQi){
 		Session session = sf.openSession();
 		QuestionItem qi = (QuestionItem)session.get(QuestionItem.class,newQi.getQuestionId());

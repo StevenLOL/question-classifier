@@ -20,7 +20,6 @@ public class QuestionItem {
 	@Transient
 	private List<Sentence> sentences;
 	
-	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name = "QUESTION_ID")
@@ -53,7 +52,6 @@ public class QuestionItem {
 		this.sentences = sentences;
 	}
 	
-
 	public List<Sentence> getSentences() {
 		return sentences;
 	}
@@ -70,7 +68,6 @@ public class QuestionItem {
 		this.year = year;
 	}
 
-	
 	public int getQuestionId() {
 		return questionId;
 	}
@@ -121,6 +118,13 @@ public class QuestionItem {
 
 	public void setSentences(List<Sentence> sentences) {
 		this.sentences = sentences;
+	}
+
+
+	@Override
+	public String toString() {
+		return "QuestionItem [category=" + category + ", type=" + type + ", userId=" + userId + ", originalBody="
+				+ originalBody + "]";
 	}
 
 	public void displayWordValues(){

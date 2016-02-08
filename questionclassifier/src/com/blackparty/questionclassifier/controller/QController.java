@@ -1,12 +1,16 @@
 package com.blackparty.questionclassifier.controller;
 
+import java.awt.PageAttributes.MediaType;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Collection;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,6 +24,7 @@ import net.didion.jwnl.data.PointerUtils;
 import net.didion.jwnl.data.list.PointerTargetNodeList;
 import net.didion.jwnl.dictionary.Dictionary;
 
+import com.blackparty.questionclassifier.DAO.QuestionItemDAO;
 import com.blackparty.questionclassifier.core.RelationshipExtractor;
 import com.blackparty.questionclassifier.core.Splitter;
 import com.blackparty.questionclassifier.core.Tagger;
@@ -30,10 +35,26 @@ import com.blackparty.questionclassifier.models.User;
 
 
 @Controller
-@SessionAttributes("user_object")
+@SessionAttributes({"user_object","question_object"})
 public class QController {
+	@Autowired
+	private QuestionItemDAO  aiDAO;
+	
+	
 	private String systemMessage;
 	private boolean flag;
+	
+	@RequestMapping(value="/view",method = RequestMethod.GET)
+	public ModelAndView viewQuestion(
+				@RequestParam("question_id")int questionId
+			){
+		System.out.println(">> "+questionId);
+		ModelAndView mav = new ModelAndView("result");
+		QuestionItem qi = aiDAO.getQuestion(questionId);
+		mav.addObject("question_object",qi);
+		return mav;
+	}
+	
 	@RequestMapping(value = "/feed")
 	public ModelAndView showFeedPage(@RequestParam(value = "file") MultipartFile file,
 			@ModelAttribute("user_object") User user) {
