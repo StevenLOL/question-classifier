@@ -22,7 +22,7 @@ import com.blackparty.questionclassifier.service.UserService;
 import com.blackparty.questionclassifier.service.UserService;
 
 @Controller
-@SessionAttributes("user_object")
+@SessionAttributes("user_object, question_object")
 public class UserController {
 	private String systemMessage = " ";
 
@@ -33,7 +33,7 @@ public class UserController {
 
 	@RequestMapping(value = "/login")
 	public ModelAndView login(@RequestParam(value = "username") String username,
-			@RequestParam(value = "password") String password) {
+			@RequestParam(value = "password") String password, HttpServletRequest request) {
 		String destination = "login";
 		System.out.println("Running UserController.login() method.");
 		User fetchedUser = um.getUser(username);
@@ -44,10 +44,12 @@ public class UserController {
 			destination = "dashboard";
 			mav = new ModelAndView(destination, "message", "Running QController.login() method.");
 			mav.addObject("user_object", fetchedUser);
-			
-			//fetching all questions for the user
+			request.getSession().setAttribute("username", fetchedUser.getUsername());
+
+			// fetching all questions for the user
 			List<QuestionItem> qiList = qiDAO.getAllQuestions(fetchedUser.getUserId());
-			mav.addObject("list_of_questions",qiList);
+			mav.addObject("question_object", qiList);
+
 			System.out.println(systemMessage);
 		} else {
 			mav = new ModelAndView(destination, "message", "Running QController.login() method.");
@@ -60,9 +62,11 @@ public class UserController {
 
 	@RequestMapping("/logout")
 	public ModelAndView logout(@ModelAttribute("user_object") User userObject, BindingResult bindingResult,
-			SessionStatus sessionStatus) {
+			SessionStatus sessionStatus, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("login");
 		sessionStatus.setComplete();
+
+		request.getSession().invalidate();
 		return mav;
 	}
 

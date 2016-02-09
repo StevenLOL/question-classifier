@@ -13,20 +13,20 @@ public class Word {
 		this.posTag = pos;
 	}
 
-	public String getWord() {
+	public String getWordName() {
 		return wordName;
 	}
 
-	public void setWord(String word) {
-		this.wordName = word;
+	public void setWordName(String wordName) {
+		this.wordName = wordName;
 	}
 
-	public String getPos() {
+	public String getPosTag() {
 		return posTag;
 	}
 
-	public void setPos(String pos) {
-		this.posTag = pos;
+	public void setPosTag(String posTag) {
+		this.posTag = posTag;
 	}
 
 	@Override

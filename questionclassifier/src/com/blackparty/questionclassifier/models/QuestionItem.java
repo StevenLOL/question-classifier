@@ -37,10 +37,10 @@ public class QuestionItem {
 	@Column(name = "USER_ID")
 	private int userId;
 	
-	@Column(name = "QUESITON_ORIGINAL_BODY")
+	@Column(name = "QUESTION_ORIGINAL_BODY")
 	private String originalBody;
 	
-	@Column(name = "QUESITON_ISOLATED")
+	@Column(name = "QUESTION_ISOLATED")
 	private String isolated;
 	
 	public QuestionItem(){}
@@ -52,16 +52,12 @@ public class QuestionItem {
 		this.sentences = sentences;
 	}
 	
-	public List<Sentence> getSentences() {
-		return sentences;
-	}
-
-	public void setSentenceList(List<Sentence> sentences) {
-		this.sentences = sentences;
-	}
-
 	public int getYear() {
 		return year;
+	}
+
+	public List<Sentence> getSentences() {
+		return sentences;
 	}
 
 	public void setYear(int year) {
@@ -127,11 +123,11 @@ public class QuestionItem {
 				+ originalBody + "]";
 	}
 
-	public void displayWordValues(){
+	public void displayWordValues(QuestionItem qi){
 		System.out.println("display word values..");
-        for(Sentence s : getSentences()){
+        for(Sentence s : qi.getSentences()){
             for(Word w: s.getWordList()){
-                System.out.println(w.getWord());
+                System.out.println(w.getWordName());
             }
         }
     }

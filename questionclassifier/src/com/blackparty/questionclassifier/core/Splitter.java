@@ -10,92 +10,91 @@ import com.blackparty.questionclassifier.models.Word;
 import com.sun.org.apache.bcel.internal.generic.StackProducer;
 
 public class Splitter {
-	
+
 	private QuestionItem questionItem;
 	private String regex = " ?(?<!\\G)((?<=[^\\p{Punct}])(?=\\p{Punct})|\\b) ?";
 
 	public Splitter() {
 	}
 
-	
-	public QuestionItem distribute(String input){
+	public QuestionItem distribute(String input) {
 		QuestionItem qi = new QuestionItem();
-        List<Sentence> sentenceList = new ArrayList();
-        Sentence s = new Sentence();
+		List<Sentence> sentenceList = new ArrayList();
+		Sentence s = null;
 
-        String[] split = splitter(input);
-        ArrayList<Word> wordList = new ArrayList<Word>();
-        for (int i = 0; i < split.length; i++) {
-            Word w = new Word();
-            w.setWord(split[i]);
-            wordList.add(w);
-            System.out.println("!> "+w.getWord());
-            if (wordList.get(wordList.size() - 1).getWord().contentEquals(".")||
-            		wordList.get(wordList.size() - 1).getWord().contentEquals("?")) {
-                System.out.println("hit!!!!!!!!!!!!");
-                if (s.getWordList().isEmpty()) {
-                	System.out.println("empty");
-                    s.setWordList(wordList);
-                } else {
-                	System.out.println("insert");
-                    sentenceList.add(s);
-                }
-            }
-        }
-        qi.setSentenceList(sentenceList);
-        return qi;
+		String[] split = splitter(input);
+		ArrayList<Word> wordList = new ArrayList<Word>();
+		for (int i = 0; i < split.length; i++) {
+			Word w = new Word();
+			w.setWordName(split[i]);
+			wordList.add(w);
+			System.out.println("> " + w.getWordName());
+			if (wordList.get(wordList.size() - 1).getWordName().contentEquals(".")) {
+				System.out.println("hit!!!!!!!!!!!!");
+				if (s == null) {
+					System.out.println("insert");
+					s = new Sentence();
+					s.setWordList(wordList);
+				} else {
+					System.out.println("add");
+					sentenceList.add(s);
+				}
+			}
+		}
+		qi.setSentences(sentenceList);
+		return qi;
 	}
+
 	public String[] splitter(String input) {
 		String[] split = input.split(regex);
 
-		//List<String> temp = new ArrayList<String>();
+		// List<String> temp = new ArrayList<String>();
 		// check if there are fractions/decimals in the sentence (eg."2A.4C").
 		// Should be considered as one
-		/*temp = mergeFraction(split);
-		split = null;
-		split = temp.stream().toArray(String[]::new);
-		Arrays.stream(split).forEach(System.out::println);
-		System.out.println("");
-
-		temp = null;
-		temp = mergeExpression(split);
-		split = null;
-		split = temp.stream().toArray(String[]::new);
-		Arrays.stream(split).forEach(System.out::println);
-		System.out.println("");*/
+		/*
+		 * temp = mergeFraction(split); split = null; split =
+		 * temp.stream().toArray(String[]::new);
+		 * Arrays.stream(split).forEach(System.out::println);
+		 * System.out.println("");
+		 * 
+		 * temp = null; temp = mergeExpression(split); split = null; split =
+		 * temp.stream().toArray(String[]::new);
+		 * Arrays.stream(split).forEach(System.out::println);
+		 * System.out.println("");
+		 */
 		return split;
 	}
 
-	public List<String> mergeExpression(String[] input){
+	public List<String> mergeExpression(String[] input) {
 		List<String> temp = new ArrayList<String>();
-        System.out.println("Length: " + input.length);
-        String expression = null;
-        int i;
-        for (i = 0; i < input.length; i++) {
-            //check if index has open parenthesis
-        	if(input[i].contentEquals("(")){
-        		int stackParenthesis = 1;
-            	expression = "(";
-            	do{
-                	if(input[i].contentEquals("(")){
-                		stackParenthesis++;
-                		expression.concat("(");
-                	}else if(input[i].contentEquals(")")){
-                		stackParenthesis--;
-                		expression.concat(")");
-                	}else{
-                		expression.concat(input[i]);
-                	}
-                	i++;
-                	if(stackParenthesis == 0){
-                		break;
-                	}
-                }while(true);
-            }
-        	temp.add(expression);
-        }
-        //if not, check if index has arithmetic operation (+ - * /)
-        return temp;
+		System.out.println("Length: " + input.length);
+		String expression = null;
+		int i;
+		for (i = 0; i < input.length; i++) {
+			// check if index has open parenthesis
+			if (input[i].contentEquals("(")) {
+				int stackParenthesis = 1;
+				expression = "(";
+				do {
+					if (input[i].contentEquals("(")) {
+						stackParenthesis++;
+						expression.concat("(");
+					} else if (input[i].contentEquals(")")) {
+						stackParenthesis--;
+						expression.concat(")");
+					} else {
+						expression.concat(input[i]);
+					}
+					i++;
+					if (stackParenthesis == 0) {
+						break;
+					}
+				} while (true);
+			}
+			temp.add(expression);
+		}
+		// if not, check if index has arithmetic operation (+ - * /)
+		return temp;
 	}
 
 	public List<String> mergeFraction(String[] input) {

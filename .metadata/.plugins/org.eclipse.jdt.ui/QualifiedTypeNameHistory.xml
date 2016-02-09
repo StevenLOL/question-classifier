@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="org.springframework.ejb.access.LocalStatelessSessionProxyFactoryBean"/>
-<fullyQualifiedTypeName name="org.springframework.orm.hibernate4.LocalSessionFactoryBean"/>
-<fullyQualifiedTypeName name="org.springframework.orm.hibernate3.HibernateTransactionManager"/>
-<fullyQualifiedTypeName name="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
-<fullyQualifiedTypeName name="java.util.Properties"/>
-<fullyQualifiedTypeName name="org.apache.commons.dbcp.BasicDataSource"/>
 <fullyQualifiedTypeName name="javax.sql.DataSource"/>
 <fullyQualifiedTypeName name="org.springframework.core.env.Environment"/>
 <fullyQualifiedTypeName name="org.apache.commons.dbcp2.BasicDataSource"/>
@@ -53,11 +47,17 @@
 <fullyQualifiedTypeName name="javax.persistence.Transient"/>
 <fullyQualifiedTypeName name="javax.persistence.ManyToOne"/>
 <fullyQualifiedTypeName name="javax.persistence.JoinColumn"/>
-<fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="java.awt.PageAttributes.MediaType"/>
 <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestMethod"/>
 <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PathVariable"/>
-<fullyQualifiedTypeName name="com.blackparty.questionclassifier.models.QuestionItem"/>
 <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
 <fullyQualifiedTypeName name="com.blackparty.questionclassifier.DAO.QuestionItemDAO"/>
+<fullyQualifiedTypeName name="com.blackparty.questionclassifier.models.QuestionItem"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="com.blackparty.questionclassifier.models.Sentence"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="com.blackparty.questionclassifier.models.Word"/>
+<fullyQualifiedTypeName name="com.blackparty.questionclassifier.core.QuestionProcesser"/>
+<fullyQualifiedTypeName name="com.blackparty.questionclassifier.core.TaggerImpl"/>
+<fullyQualifiedTypeName name="java.util.Stack"/>
 </qualifiedTypeNameHistroy>
