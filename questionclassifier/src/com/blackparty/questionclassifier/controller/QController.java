@@ -57,14 +57,19 @@ public class QController {
 	}
 	
 	@RequestMapping(value = "/feed")
-	public ModelAndView showFeedPage(@RequestParam(value = "file") MultipartFile file,
-			@ModelAttribute("user_object") User user) {
+	public ModelAndView showFeedPage(@RequestParam(value = "file") MultipartFile file
+			) {
 		if (!file.isEmpty()) {
 			try {
+				User us = new User();
+				us.setUsername("admin");
 				Uploader u = new Uploader();
 				System.out.println("Uploading File..");
 				
-				u.upload(file,user,"Knowledge");
+				QuestionProcesser qp = new QuestionProcesser();
+				//qp.startProcess(input);
+
+				u.upload(file,us,"Knowledge");
 			} catch (Exception e) {
 				systemMessage = "Upload failed";
 				e.getMessage();
@@ -101,10 +106,6 @@ public class QController {
 			@RequestParam(value="message")String input
 			){
 		ModelAndView mav = new ModelAndView("feed","message","Running QController.process() method.");
-		
-		
-		
-		
 		QuestionProcesser qp = new QuestionProcesser();
 		qp.startProcess(input);
 		return mav;
@@ -123,7 +124,7 @@ public class QController {
 		System.out.println("MESSAGE = "+message);
 		try{
 			//JWNL initialization
-			JWNL.initialize(new FileInputStream("D:\\Yeyah\\School\\Thesis\\question-classifier\\questionclassifier\\WebContent\\jwnl_properties.xml"));
+			JWNL.initialize(new FileInputStream("D:\\Our Files\\Eric\\J2EE Mars\\QCRepo\\question-classifier\\questionclassifier\\WebContent\\jwnl_properties.xml"));
 			final Dictionary dictionary = Dictionary.getInstance();
 			
 			

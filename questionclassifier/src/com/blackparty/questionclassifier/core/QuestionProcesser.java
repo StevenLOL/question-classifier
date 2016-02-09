@@ -22,8 +22,8 @@ public class QuestionProcesser {
 		qi = t.tag(qi);
 
 		showTagSentence(qi);
-		System.out.println();
-		System.out.println("\nHEAD WORD = " + getHeadWord(qi));
+		Classifier c = new Classifier();
+		c.classify(getHeadWord(qi));
 	}
 	
 	public String getHeadWord(QuestionItem qi){
@@ -45,6 +45,7 @@ public class QuestionProcesser {
 					flag = true;
 				}
 				if(flag){
+					System.out.println(wordList.get(i).getWordName()+" = "+wordList.get(i).getPosTag());
 					if(wordList.get(i).getPosTag().contains(NOUN)){
 						headword = headword+" "+wordList.get(i).getWordName();
 					}else {

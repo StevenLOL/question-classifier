@@ -36,6 +36,8 @@ public class QuestionItemDAO {
 		for(QuestionItem e: qiList){
 			System.out.println(e.toString());
 		}
+		session.flush();
+		session.close();
 		return qiList;
 	}
 	@SuppressWarnings("unchecked")

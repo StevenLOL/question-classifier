@@ -32,6 +32,7 @@ public class UserController {
 	QuestionItemDAO qiDAO;
 
 	@RequestMapping(value = "/login")
+	
 	public ModelAndView login(@RequestParam(value = "username") String username,
 			@RequestParam(value = "password") String password, HttpServletRequest request) {
 		String destination = "login";

@@ -10,7 +10,57 @@ import java.io.InputStreamReader;
 import java.util.*;
 
 public class Classifier {
-    public static void main(String args[]) throws IOException {
+	
+	
+	public int classify(String headword){
+		int number = 0;
+		System.out.println("");
+		
+		try{
+			ArrayList<String> knowledge_keywords_list = readKnowledge();
+		    ArrayList<String> process_keywords_list = readProcess();
+		    ArrayList<String> understanding_keywords_list = readUnderstanding();
+		    ArrayList<String> product_keywords_list = readProduct();
+		 
+		    for(String e:knowledge_keywords_list){
+		    	System.out.println("."+e);
+		    	if(headword.contains(e.toLowerCase())){
+		    		System.out.println("Category Knowledge: Yes");
+		    		number = 1;
+		    	}
+			}
+			for(String e:process_keywords_list){
+				if(headword.contains(e.toLowerCase())){
+		    		System.out.println("Category Process: Yes");
+		    		number = 2;
+		    	}
+			}
+			for(String e:understanding_keywords_list){
+				if(headword.contains(e.toLowerCase())){
+		    		System.out.println("Category Understanding: Yes");
+		    		number = 3;
+		    	}
+			}
+			for(String e:product_keywords_list){
+				if(headword.contains(e.toLowerCase())){
+		    		System.out.println("Category Product: Yes");
+		    		number = 4;
+		    	}
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+       
+		return number;
+	}
+	
+	
+	
+	
+	
+	
+    /*public static void main(String args[]) throws IOException {
 
         
         Scanner sc = new Scanner(System.in);
@@ -54,7 +104,7 @@ public class Classifier {
             System.out.println(me.getValue());
         }
 
-    }
+    }*/
 
     //======================================================== PROCESSING SA QUESTION ITSELF
     /**
@@ -190,8 +240,8 @@ public class Classifier {
     /**
      * READ KNOWLEDGE KEYWORDS FROM FILE *
      */
-    public static ArrayList<String> readKnowledge() throws FileNotFoundException, IOException {
-        File f = new File("Knowledge.txt");
+    public  ArrayList<String> readKnowledge() throws FileNotFoundException, IOException {
+        File f = new File("D:/Our Files/Eric/J2EE Mars/QCRepo/question-classifier/questionclassifier/lib/Essentials/Knowledge.txt");
         FileInputStream fis_file = new FileInputStream(f);
         BufferedReader br_file = new BufferedReader(new InputStreamReader(fis_file));
 
@@ -214,8 +264,8 @@ public class Classifier {
     /**
      * READ PROCESS KEYWORDS FROM FILE *
      */
-    public static ArrayList<String> readProcess() throws FileNotFoundException, IOException {
-        File f = new File("Process.txt");
+    public  ArrayList<String> readProcess() throws FileNotFoundException, IOException {
+        File f = new File("D:/Our Files/Eric/J2EE Mars/QCRepo/question-classifier/questionclassifier/lib/Essentials/Process.txt");
         FileInputStream fis_file = new FileInputStream(f);
         BufferedReader br_file = new BufferedReader(new InputStreamReader(fis_file));
 
@@ -238,8 +288,8 @@ public class Classifier {
     /**
      * READ UNDERSTANDING KEYWORDS FROM FILE *
      */
-    public static ArrayList<String> readUnderstanding() throws FileNotFoundException, IOException {
-        File f = new File("Understanding.txt");
+    public  ArrayList<String> readUnderstanding() throws FileNotFoundException, IOException {
+        File f = new File("D:/Our Files/Eric/J2EE Mars/QCRepo/question-classifier/questionclassifier/lib/Essentials/Understanding.txt");
         FileInputStream fis_file = new FileInputStream(f);
         BufferedReader br_file = new BufferedReader(new InputStreamReader(fis_file));
 
@@ -262,8 +312,8 @@ public class Classifier {
     /**
      * READ PRODUCT KEYWORDS FROM FILE *
      */
-    public static ArrayList<String> readProduct() throws FileNotFoundException, IOException {
-        File f = new File("Product.txt");
+    public  ArrayList<String> readProduct() throws FileNotFoundException, IOException {
+        File f = new File("D:/Our Files/Eric/J2EE Mars/QCRepo/question-classifier/questionclassifier/lib/Essentials/Product.txt");
         FileInputStream fis_file = new FileInputStream(f);
         BufferedReader br_file = new BufferedReader(new InputStreamReader(fis_file));
 

@@ -28,7 +28,7 @@ public class NavigationController {
 		ModelAndView mav = null;
 		String page;
 		if (request.getSession().getAttribute("username") != null) {
-			page = "feed-page";
+			page = "dashboard";
 		} else {
 			page = "login";
 

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE html>
@@ -47,12 +48,22 @@
 <link rel="stylesheet"
 	href="<c:url value="/resources/AdminLTE/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css"/>">
 
+<!-- ITEM-BOXES -->
+<link rel="stylesheet"
+	href="<c:url value="/resources/AdminLTE/dist/css/item-boxes.css"/>">
+
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
+
+<style>
+.white, .white a {
+	color: #fff;
+}
+</style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 	<div class="wrapper">
@@ -258,7 +269,7 @@
 							class="dropdown-toggle" data-toggle="dropdown"> <img
 								src="<c:url value="/resources/AdminLTE/dist/img/user2-160x160.jpg"/>"
 								class="user-image" alt="User Image"> <span
-								class="hidden-xs">${user_object.getUsername()}</span>
+								class="hidden-xs">${username}</span>
 						</a>
 							<ul class="dropdown-menu">
 								<!-- User image -->
@@ -267,13 +278,13 @@
 									class="img-circle" alt="User Image">
 
 									<p>
-										Alexander Pierce - Web Developer <small>Member since
+										${username} - Teacher <small>Member since
 											Nov. 2012</small>
 									</p></li>
 								<!-- Menu Body -->
 								<li class="user-body">
 									<div class="row">
-										<div class="col-xs-4 text-center">
+										<!-- <div class="col-xs-4 text-center">
 											<a href="#">Followers</a>
 										</div>
 										<div class="col-xs-4 text-center">
@@ -281,7 +292,7 @@
 										</div>
 										<div class="col-xs-4 text-center">
 											<a href="#">Friends</a>
-										</div>
+										</div> -->
 									</div> <!-- /.row -->
 								</li>
 								<!-- Menu Footer-->
@@ -313,7 +324,7 @@
 							class="img-circle" alt="User Image">
 					</div>
 					<div class="pull-left info">
-						<p>${user_object.getUsername()}</p>
+						<p>${username}</p>
 						<a href="#"><i class="fa fa-circle text-success"></i> Online</a>
 					</div>
 				</div>
@@ -341,39 +352,16 @@
 							<li class="active"><a href="dashboard"><i
 									class="fa fa-circle-o"></i> Dashboard v1</a></li>
 						</ul></li>
-					<li><a href="pages/widgets.html"> <i class="fa fa-th"></i>
-							<span>Widgets</span> <small class="label pull-right bg-green">new</small>
-					</a></li>
-					<li class="treeview"><a href="#"> <i
-							class="fa fa-pie-chart"></i> <span>Charts</span> <i
-							class="fa fa-angle-left pull-right"></i>
-					</a>
-						<ul class="treeview-menu">
-							<li><a href="pages/charts/chartjs.html"><i
-									class="fa fa-circle-o"></i> ChartJS</a></li>
-							<li><a href="pages/charts/morris.html"><i
-									class="fa fa-circle-o"></i> Morris</a></li>
-							<li><a href="pages/charts/flot.html"><i
-									class="fa fa-circle-o"></i> Flot</a></li>
-							<li><a href="pages/charts/inline.html"><i
-									class="fa fa-circle-o"></i> Inline charts</a></li>
-						</ul></li>
+
 					<li class="treeview"><a href="#"> <i class="fa fa-edit"></i>
 							<span>Control Panel</span> <i class="fa fa-angle-left pull-right"></i>
 					</a>
 						<ul class="treeview-menu">
 							<li><a href="feed-page"><i class="fa fa-circle-o"></i>
 									Feed</a></li>
-							<li><a href="pages/forms/advanced.html"><i
-									class="fa fa-circle-o"></i> Advanced Elements</a></li>
-							<li><a href="pages/forms/editors.html"><i
-									class="fa fa-circle-o"></i> Editors</a></li>
+
 						</ul></li>
 
-					<li><a href="pages/mailbox/mailbox.html"> <i
-							class="fa fa-envelope"></i> <span>Mailbox</span> <small
-							class="label pull-right bg-yellow">12</small>
-					</a></li>
 				</ul>
 			</section>
 			<!-- /.sidebar -->
@@ -404,31 +392,58 @@
 							<!-- /.box-header -->
 							<div class="box-body">
 								<table id="example2" class="table table-bordered table-hover">
-			
+
 									<thead>
 										<tr>
 											<td>Category</td>
 											<td>Question</td>
 											<td>Type of Question</td>
 											<td>Year</td>
+
 										</tr>
 									</thead>
 									<tbody>
 										<!-- place your questions here -->
-										<c:forEach var="questions" items="${list_of_questions}">
+										<c:forEach var="questions" items="${question_object}">
 											<tr>
-												<td><c:out value="${questions.getCategory()}"/></td>
-												<td><c:out value ="${questions.getOriginalBody()}"/></td>
-												<td><c:out value ="${questions.getType()}"/></td>
-												<td><c:out value ="${questions.getYear()}"/></td>
-												<td><a href="view?question_id= <c:out value ="${questions.getQuestionId()}"/>"><button>View</button></a></td>
-											
+												<c:choose>
+													<c:when test="${questions.getCategory()=='KNOWLEDGE'}">
+														<td style="background-color: #5b9bd5; color: #f0f0f0;">${questions.getCategory()}</td>
+														<td style="background-color: #5b9bd5; color: #f0f0f0;">${questions.getOriginalBody()}</td>
+														<td style="background-color: #5b9bd5; color: #f0f0f0;">${questions.getType()}</td>
+														<td style="background-color: #5b9bd5; color: #f0f0f0;">${questions.getYear()}</td>
+
+													</c:when>
+													<c:when test="${questions.getCategory()=='PROCESS'}">
+														<td style="background-color: #ed7d31; color: #f0f0f0;">${questions.getCategory()}</td>
+														<td style="background-color: #ed7d31; color: #f0f0f0;">${questions.getOriginalBody()}</td>
+														<td style="background-color: #ed7d31; color: #f0f0f0;">${questions.getType()}</td>
+														<td style="background-color: #ed7d31; color: #f0f0f0;">${questions.getYear()}</td>
+
+													</c:when>
+													<c:when test="${questions.getCategory()=='UNDERSTANDING'}">
+														<td style="background-color: #70ad47; color: #f0f0f0;">${questions.getCategory()}</td>
+														<td style="background-color: #70ad47; color: #f0f0f0;">${questions.getOriginalBody()}</td>
+														<td style="background-color: #70ad47; color: #f0f0f0;">${questions.getType()}</td>
+														<td style="background-color: #70ad47; color: #f0f0f0;">${questions.getYear()}</td>
+
+													</c:when>
+													<c:otherwise>
+														<td style="background-color: #7030a0; color: #f0f0f0;">${questions.getCategory()}</td>
+														<td style="background-color: #7030a0; color: #f0f0f0;">${questions.getOriginalBody()}</td>
+														<td style="background-color: #7030a0; color: #f0f0f0;">${questions.getType()}</td>
+														<td style="background-color: #7030a0; color: #f0f0f0;">${questions.getYear()}</td>
+
+													</c:otherwise>
+												</c:choose>
+
 											</tr>
+
 										</c:forEach>
 									</tbody>
 									<tfoot>
 										<tr>
-											<th></th>
+
 										</tr>
 									</tfoot>
 								</table>
@@ -455,174 +470,67 @@
 		</footer>
 
 		<!-- Control Sidebar -->
-		<aside class="control-sidebar control-sidebar-dark">
+		<aside class="control-sidebar control-sidebar-dark "
+			style="position: fixed; height: auto;">
 			<!-- Create the tabs -->
 			<ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-				<li><a href="#control-sidebar-home-tab" data-toggle="tab"><i
-						class="fa fa-home"></i></a></li>
-				<li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i
-						class="fa fa-gears"></i></a></li>
+				<li><a href="#control-sidebar-home-tab" data-toggle="tab"><small
+						class="label bg-green">new</small></a></li>
+				<!-- 	<li><a href="#control-sidebar-settings-tab" data-toggle="tab"><small class="label bg-green">new</small></li> -->
 			</ul>
 			<!-- Tab panes -->
 			<div class="tab-content">
 				<!-- Home tab content -->
 				<div class="tab-pane" id="control-sidebar-home-tab">
-					<h3 class="control-sidebar-heading">Recent Activity</h3>
+					<h3 class="control-sidebar-heading">New Questions</h3>
 					<ul class="control-sidebar-menu">
-						<li><a href="javascript::;"> <i
-								class="menu-icon fa fa-birthday-cake bg-red"></i>
 
-								<div class="menu-info">
-									<h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
+						<c:forEach var="questions" items="${question_object}">
 
-									<p>Will be 23 on April 24th</p>
-								</div>
-						</a></li>
-						<li><a href="javascript::;"> <i
-								class="menu-icon fa fa-user bg-yellow"></i>
+							<c:choose>
+								<c:when test="${questions.getCategory()=='KNOWLEDGE'}">
+									<li style="background-color: #5b9bd5; color: #f0f0f0;"><div
+											class="menu-info">${questions.getIsolated()}</div></li>
 
-								<div class="menu-info">
-									<h4 class="control-sidebar-subheading">Frodo Updated His
-										Profile</h4>
+								</c:when>
+								<c:when test="${questions.getCategory()=='PROCESS'}">
+									<li style="background-color: #ed7d31; color: #f0f0f0;"><div
+											class="menu-info">${questions.getIsolated()}</div></li>
 
-									<p>New phone +1(800)555-1234</p>
-								</div>
-						</a></li>
-						<li><a href="javascript::;"> <i
-								class="menu-icon fa fa-envelope-o bg-light-blue"></i>
 
-								<div class="menu-info">
-									<h4 class="control-sidebar-subheading">Nora Joined Mailing
-										List</h4>
+								</c:when>
+								<c:when test="${questions.getCategory()=='UNDERSTANDING'}">
+									<li style="background-color: #70ad47; color: #f0f0f0;"><div
+											class="menu-info">${questions.getIsolated()}</div></li>
 
-									<p>nora@example.com</p>
-								</div>
-						</a></li>
-						<li><a href="javascript::;"> <i
-								class="menu-icon fa fa-file-code-o bg-green"></i>
-								<div class="menu-info">
-									<h4 class="control-sidebar-subheading">Cron Job 254
-										Executed</h4>
 
-									<p>Execution time 5 seconds</p>
-								</div>
-						</a></li>
+								</c:when>
+								<c:otherwise>
+									<li style="background-color: #7030a0; color: #f0f0f0;"><div
+											class="menu-info">${questions.getIsolated()}</div></li>
+
+
+								</c:otherwise>
+							</c:choose>
+
+
+						</c:forEach>
+
 					</ul>
-					<!-- /.control-sidebar-menu -->
-
-					<h3 class="control-sidebar-heading">Tasks Progress</h3>
-					<ul class="control-sidebar-menu">
-						<li><a href="javascript::;">
-								<h4 class="control-sidebar-subheading">
-									Custom Template Design <span
-										class="label label-danger pull-right">70%</span>
-								</h4>
-								<div class="progress progress-xxs">
-									<div class="progress-bar progress-bar-danger"
-										style="width: 70%"></div>
-								</div>
-						</a></li>
-						<li><a href="javascript::;">
-								<h4 class="control-sidebar-subheading">
-									Update Resume <span class="label label-success pull-right">95%</span>
-								</h4>
-
-								<div class="progress progress-xxs">
-									<div class="progress-bar progress-bar-success"
-										style="width: 95%"></div>
-								</div>
-						</a></li>
-						<li><a href="javascript::;">
-								<h4 class="control-sidebar-subheading">
-									Laravel Integration <span
-										class="label label-warning pull-right">50%</span>
-								</h4>
-
-								<div class="progress progress-xxs">
-									<div class="progress-bar progress-bar-warning"
-										style="width: 50%"></div>
-								</div>
-						</a></li>
-						<li><a href="javascript::;">
-								<h4 class="control-sidebar-subheading">
-									Back End Framework <span class="label label-primary pull-right">68%</span>
-								</h4>
-
-								<div class="progress progress-xxs">
-									<div class="progress-bar progress-bar-primary"
-										style="width: 68%"></div>
-								</div>
-						</a></li>
-					</ul>
-					<!-- /.control-sidebar-menu -->
+					/.control-sidebar-menu
 
 				</div>
-				<!-- /.tab-pane -->
-				<!-- Stats tab content -->
+				/.tab-pane Stats tab content
 				<div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab
 					Content</div>
-				<!-- /.tab-pane -->
-				<!-- Settings tab content -->
-				<div class="tab-pane" id="control-sidebar-settings-tab">
-					<form method="post">
-						<h3 class="control-sidebar-heading">General Settings</h3>
+				/.tab-pane Settings tab content
 
-						<div class="form-group">
-							<label class="control-sidebar-subheading"> Report panel
-								usage <input type="checkbox" class="pull-right" checked>
-							</label>
-
-							<p>Some information about this general settings option</p>
-						</div>
-						<!-- /.form-group -->
-
-						<div class="form-group">
-							<label class="control-sidebar-subheading"> Allow mail
-								redirect <input type="checkbox" class="pull-right" checked>
-							</label>
-
-							<p>Other sets of options are available</p>
-						</div>
-						<!-- /.form-group -->
-
-						<div class="form-group">
-							<label class="control-sidebar-subheading"> Expose author
-								name in posts <input type="checkbox" class="pull-right" checked>
-							</label>
-
-							<p>Allow the user to show his name in blog posts</p>
-						</div>
-						<!-- /.form-group -->
-
-						<h3 class="control-sidebar-heading">Chat Settings</h3>
-
-						<div class="form-group">
-							<label class="control-sidebar-subheading"> Show me as
-								online <input type="checkbox" class="pull-right" checked>
-							</label>
-						</div>
-						<!-- /.form-group -->
-
-						<div class="form-group">
-							<label class="control-sidebar-subheading"> Turn off
-								notifications <input type="checkbox" class="pull-right">
-							</label>
-						</div>
-						<!-- /.form-group -->
-
-						<div class="form-group">
-							<label class="control-sidebar-subheading"> Delete chat
-								history <a href="javascript::;" class="text-red pull-right"><i
-									class="fa fa-trash-o"></i></a>
-							</label>
-						</div>
-						<!-- /.form-group -->
-					</form>
-				</div>
 				<!-- /.tab-pane -->
 			</div>
 		</aside>
 		<!-- /.control-sidebar -->
+
+
 		<!-- Add the sidebar's background. This div must be placed
        immediately after the control sidebar -->
 		<div class="control-sidebar-bg"></div>

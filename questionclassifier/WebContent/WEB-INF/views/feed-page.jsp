@@ -251,7 +251,7 @@
 									class="img-circle" alt="User Image">
 
 									<p>
-										${user_object.getUsername()} - Teacher <small>Member since
+										${username} - Teacher <small>Member since
 											Nov. 2012</small>
 									</p></li>
 								<!-- Menu Body -->

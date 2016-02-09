@@ -1,0 +1,63 @@
+Arrange
+Define
+Describe
+Duplicate
+Identify
+Label
+List
+Match
+Memorize
+Name
+Order
+Outline
+Recognize
+Relate
+Recall
+Repeat
+Reproduce
+Select
+State
+interrupt
+OS
+program
+infinite 
+loop
+language
+applications
+ web 
+browsers
+method
+designer
+group
+personnel
+design 
+documents
+completion
+design
+purpose
+detection
+design error
+protocol
+TCP/IP networks
+ information
+network
+devices
+servers
+switches
+hubs
+operation
+general 
+purpose
+markup
+language
+key technology
+function of mapping
+purpose
+errors
+data structures
+high-speed memory technology
+interface
+mechanisms
+tasks
+combinations
+execution sequence

@@ -16,8 +16,8 @@ INDEX VERSION 1.127+D:\Our Files\Eric\J2EE Mars\QCRepo\question-classifier\.meta
 2527719856.index
 972866666.index
 1834466495.index
-2406401729.index
 4152376280.index
+2406401729.index
 3109601978.index
 2707258713.index
 3961661809.index
@@ -26,8 +26,8 @@ INDEX VERSION 1.127+D:\Our Files\Eric\J2EE Mars\QCRepo\question-classifier\.meta
 3593098758.index
 91339629.index
 172438950.index
-2617034783.index
 2091922720.index
+2617034783.index
 1559131278.index
 3410896088.index
 2099085747.index
@@ -43,8 +43,8 @@ INDEX VERSION 1.127+D:\Our Files\Eric\J2EE Mars\QCRepo\question-classifier\.meta
 1343972458.index
 741194884.index
 4261376021.index
-3164649909.index
 2313194934.index
+3164649909.index
 3276674381.index
 1112313909.index
 735622513.index
