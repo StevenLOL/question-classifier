@@ -11,6 +11,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
+
+
 import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.apache.pdfbox.exceptions.CryptographyException;
 import org.apache.pdfbox.exceptions.InvalidPasswordException;
@@ -19,12 +21,17 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.util.PDFTextStripper;
 import org.apache.pdfbox.util.TextPosition;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
+
+
 
 
 import com.blackparty.questionclassifier.models.Item;
 import com.blackparty.questionclassifier.models.Page;
+import com.blackparty.questionclassifier.models.QuestionProcessed;
 import com.blackparty.questionclassifier.models.User;
+import com.blackparty.questionclassifier.service.QuestionProcessedService;
 
 public class Uploader {
 	private static String question_regex = "^(\\[X=\\d*\\.?\\d*\\]\\[Y=\\d*\\.?\\d*\\])\\s*(Q\\d+\\.)\\s*(.*([^a-zA-Z\\d+]|[.*]))+";
@@ -33,6 +40,9 @@ public class Uploader {
 
 	private boolean flag = false;
 
+	@Autowired
+	private QuestionProcessedService  qpService;
+	
 	public Uploader() {
 		dataDirectoryValidate();
 	}
@@ -55,9 +65,9 @@ public class Uploader {
 		return convFile;
 	}
 
-	public boolean upload(MultipartFile file, User user, String category)
+	public boolean upload(MultipartFile file, User user)
 			throws Exception {
-
+		ArrayList<QuestionProcessed> qplist = new ArrayList<QuestionProcessed>();
 		//byte[] bytes = file.getBytes();
 		String userDirectory = dataDirectory + "/" + user.getUsername();
 		userDirectoryValidate(userDirectory, user);
@@ -84,9 +94,10 @@ public class Uploader {
 			String nfilename = file.getOriginalFilename().split("\\.")[0];
 			ArrayList<Item> byitem = parseQandC(byPage, nfilename);
 			byitem = getItemPositiononPage(byitem);
-			setRectangle(byitem,userDirectory + "/",convertedFile);
+			qplist = setRectangle(byitem,userDirectory + "/",convertedFile);
+				qpService.addQuestion(qplist);
 		}
-		return flag;
+		return true;
 	}
 	
 	public ArrayList<Page> processTextPosition(File file) throws IOException {
@@ -276,8 +287,8 @@ public class Uploader {
 		return digit;
 	}
 	
-	public void setRectangle(ArrayList<Item> byitem, String userDirectory, File file){
-
+	public ArrayList<QuestionProcessed> setRectangle(ArrayList<Item> byitem, String userDirectory, File file){
+		ArrayList<QuestionProcessed> qplist = new ArrayList<QuestionProcessed>();
 		PDDocument document = null;
 		try {
 			document = PDDocument.load(file);
@@ -290,7 +301,7 @@ public class Uploader {
 			
 			PdfTextParser parser = new PdfTextParser();
 			String question = parser.parseText(doc, byitem.get(index).getPosition());
-			System.out.println("returned question "+question);
+			System.out.println("\n\n\n\n ==== PARSED QUESTION "+question);
 			byitem.get(index).setQuestion(question);
 			byitem.get(index).setCategory("Knowledge");
 			doc.close();
@@ -308,11 +319,18 @@ public class Uploader {
 			rectangle.setLowerLeftX(page.findCropBox().getLowerLeftX());
 			page.setCropBox(rectangle);
 			
+			
+			String dir = userDirectory+byitem.get(index).getCategory()+"/"+byitem.get(index).getFilename() + "-"+byitem.get(index).getItemNumber()+ ".pdf";
+			
+			QuestionProcessed qp = new QuestionProcessed();
+			qp.setQuestionId(index+1);
+			qp.setDirectory(dir);
+			qplist.add(qp);
+			
 			PDDocument croppedDoc = null;
 			croppedDoc = new PDDocument();
 			croppedDoc.addPage(page);
-
-			croppedDoc.save(userDirectory+byitem.get(index).getCategory()+"/"+byitem.get(index).getFilename() + "-"+byitem.get(index).getItemNumber()+ ".pdf");
+			croppedDoc.save(dir);
 			croppedDoc.close();
 
 		}
@@ -324,6 +342,7 @@ public class Uploader {
 			} catch (COSVisitorException e) {
 			System.out.println( ">> "+e+" setRectangle");
 		}
+		return qplist;
 	}
 	
 }

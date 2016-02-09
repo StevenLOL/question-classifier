@@ -3,6 +3,7 @@ package com.blackparty.questionclassifier.controller;
 import java.awt.PageAttributes.MediaType;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
 import edu.stanford.nlp.trees.TypedDependency;
 import net.didion.jwnl.JWNL;
 import net.didion.jwnl.JWNLException;
@@ -25,13 +27,16 @@ import net.didion.jwnl.data.list.PointerTargetNodeList;
 import net.didion.jwnl.dictionary.Dictionary;
 
 import com.blackparty.questionclassifier.DAO.QuestionItemDAO;
+import com.blackparty.questionclassifier.DAO.QuestionProcessedDAO;
 import com.blackparty.questionclassifier.core.RelationshipExtractor;
 import com.blackparty.questionclassifier.core.Splitter;
 import com.blackparty.questionclassifier.core.Tagger;
 import com.blackparty.questionclassifier.core.TaggerImpl;
 import com.blackparty.questionclassifier.core.Uploader;
 import com.blackparty.questionclassifier.models.QuestionItem;
+import com.blackparty.questionclassifier.models.QuestionProcessed;
 import com.blackparty.questionclassifier.models.User;
+import com.blackparty.questionclassifier.service.QuestionProcessedService;
 
 
 @Controller
@@ -39,7 +44,8 @@ import com.blackparty.questionclassifier.models.User;
 public class QController {
 	@Autowired
 	private QuestionItemDAO  aiDAO;
-	
+	@Autowired
+	private QuestionProcessedService  qpService;
 	
 	private String systemMessage;
 	private boolean flag;
@@ -62,8 +68,8 @@ public class QController {
 			try {
 				Uploader u = new Uploader();
 				System.out.println("Uploading File..");
+				u.upload(file,user);
 				
-				u.upload(file,user,"Knowledge");
 			} catch (Exception e) {
 				systemMessage = "Upload failed";
 				e.getMessage();

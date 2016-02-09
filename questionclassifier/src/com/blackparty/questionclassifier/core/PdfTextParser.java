@@ -72,30 +72,39 @@ public class PdfTextParser {
 
 	public String getQuestion(String parsedText, int position) {
 		String question="";
-		String others;
+		String others, choices;
 		ArrayList<String> question_list = new ArrayList<String>();
 		Pattern q_regex = Pattern.compile(question_regex);
-		Matcher q_matcher;
+		Pattern c_regex = Pattern.compile(choices_regex);
+		Matcher q_matcher,c_matcher;
 		try (Scanner scanner = new Scanner(parsedText)) {
+			boolean qflag = false;
 			while (scanner.hasNextLine()) {
 				String line = scanner.nextLine();
 				if (!line.equals(" ") & !line.matches("^(\\s*-\\s(\\d+)\\s-)$")) {
 					question = "";
 					others = "";
+					choices = "";
 					q_matcher = q_regex.matcher(line);
+					c_matcher = c_regex.matcher(line);
 					while (q_matcher.find()) {
 						String token = q_matcher.group(0);
 						question += token;
+						qflag = true;
 					}
-					if ((!line.matches(question_regex + "$"))
-							&& (!line.matches(choices_regex + "$"))) {
-						others = line;
-					}
+					while (c_matcher.find()) {
+                        String token = c_matcher.group(0);
+                        choices += token;
+                        qflag = false;
+                    }
 					if (!question.isEmpty()) {
                         question_list.add(question);
                     }
+					if ((!line.matches(question_regex + "$"))&& (!line.matches(choices_regex + "$"))) {
+						others = line;
+					}
 					if (!question_list.isEmpty()) {
-                        if (!others.isEmpty()) {
+                        if ((!others.isEmpty()) && qflag) {
                             String temp = question_list.get(question_list.size() - 1) + "\n" + others;
                             question_list.remove(question_list.size() - 1);
                             question_list.add(temp);
